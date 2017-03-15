@@ -1,2 +1,0 @@
-# Street-Muhosranovskaia
-yo
