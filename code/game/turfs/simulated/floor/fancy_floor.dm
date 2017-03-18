@@ -21,8 +21,8 @@
 		return
 
 /turf/simulated/floor/grass
-	name = "grass patch"
-	icon_state = "grass1"
+	name = "Grass patch"
+	icon_state = "grass"
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 
@@ -45,7 +45,7 @@
 		to_chat(user, "<span class='notice'>You shovel the grass.</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		make_plating()
-		
+
 // NEEDS TO BE UPDATED
 /turf/simulated/floor/basalt //By your powers combined, I am captain planet
 	name = "volcanic floor"
@@ -54,7 +54,7 @@
 	oxygen = 14
 	nitrogen = 23
 	temperature = 300
-	
+
 /turf/simulated/floor/basalt/attackby(obj/item/W, mob/user, params)
 	if(..())
 		return

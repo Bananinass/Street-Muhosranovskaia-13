@@ -136,8 +136,9 @@
 	else if( istype(M, /mob/living/silicon/robot ))
 		new /obj/effect/decal/cleanable/blood/oil(src)
 
+
+/turf/simulated/proc/is_shielded()
+
 /turf/simulated/ChangeTurf(var/path)
 	. = ..()
 	smooth_icon_neighbors(src)
-
-/turf/simulated/proc/is_shielded()

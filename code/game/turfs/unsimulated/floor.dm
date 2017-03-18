@@ -3,13 +3,13 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "Floor3"
 
-/turf/unsimulated/floor/grass
+/turf/unsimulated/floor/grass_green
 	name = "grass patch"
 	icon_state = "grass1"
 
-/turf/unsimulated/floor/grass/New()
+/turf/unsimulated/floor/grass_green/New()
 	..()
-	icon_state = "grass[rand(1,4)]"
+	icon_state = "grass_green[rand(1,4)]"
 
 /turf/unsimulated/floor/snow
 	name = "snow"
