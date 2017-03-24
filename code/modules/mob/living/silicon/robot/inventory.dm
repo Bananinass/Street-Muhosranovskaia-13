@@ -5,93 +5,85 @@
 /mob/living/silicon/robot/get_active_hand()
 	return module_active
 
-/mob/living/silicon/robot/get_all_slots()
-	return list(module_state_1, module_state_2, module_state_3)
-
 /*-------TODOOOOOOOOOO--------*/
-/mob/living/silicon/robot/proc/uneq_module(obj/item/O)
-	if(!O)
-		return 0
 
-	O.mouse_opacity = 2
+//Verbs used by hotkeys.
+/mob/living/silicon/robot/verb/cmd_unequip_module()
+	set name = "unequip-module"
+	set hidden = 1
+	uneq_active()
 
-	if(client)
-		client.screen -= O
-	contents -= O
-	if(module)
-		O.loc = module	//Return item to module so it appears in its contents, so it can be taken out again.
-
-	if(module_active == O)
-		module_active = null
-	if(module_state_1 == O)
-		inv1.icon_state = "inv1"
-		module_state_1 = null
-	else if(module_state_2 == O)
-		inv2.icon_state = "inv2"
-		module_state_2 = null
-	else if(module_state_3 == O)
-		module_state_3 = null
-		inv3.icon_state = "inv3"
-	if(hud_used)
-		hud_used.update_robot_modules_display()
-	return 1
-
-/mob/living/silicon/robot/proc/activate_module(var/obj/item/O)
-	if(!(locate(O) in src.module.modules) && O != src.module.emag)
-		return
-	if(activated(O))
-		to_chat(src, "Already activated")
-		return
-	if(is_component_functioning("power cell") && cell)
-		if(istype(O, /obj/item/borg))
-			var/obj/item/borg/B = O
-			if(B.powerneeded)
-				if((cell.charge * 100 / cell.maxcharge) < B.powerneeded)
-					to_chat(src, "Not enough power to activate [B.name]!")
-					return
-	if(!module_state_1)
-		O.mouse_opacity = initial(O.mouse_opacity)
-		module_state_1 = O
-		O.layer = 20
-		O.plane = HUD_PLANE
-		O.screen_loc = inv1.screen_loc
-		contents += O
-	else if(!module_state_2)
-		O.mouse_opacity = initial(O.mouse_opacity)
-		module_state_2 = O
-		O.layer = 20
-		O.plane = HUD_PLANE
-		O.screen_loc = inv2.screen_loc
-		contents += O
-	else if(!module_state_3)
-		O.mouse_opacity = initial(O.mouse_opacity)
-		module_state_3 = O
-		O.layer = 20
-		O.plane = HUD_PLANE
-		O.screen_loc = inv3.screen_loc
-		contents += O
-	else
-		to_chat(src, "You need to disable a module first!")
-	update_icons()
+/mob/living/silicon/robot/verb/cmd_toggle_module(module as num)
+	set name = "toggle-module"
+	set hidden = 1
+	toggle_module(module)
 
 /mob/living/silicon/robot/proc/uneq_active()
-	uneq_module(module_active)
+	if(isnull(module_active))
+		return
+	if(module_state_1 == module_active)
+		if(istype(module_state_1,/obj/item/borg/sight))
+			sight_mode &= ~module_state_1:sight_mode
+		if (client)
+			client.screen -= module_state_1
+		contents -= module_state_1
+		module_active = null
+		module_state_1:loc = module //So it can be used again later
+		module_state_1 = null
+		inv1.icon_state = "inv1"
+	else if(module_state_2 == module_active)
+		if(istype(module_state_2,/obj/item/borg/sight))
+			sight_mode &= ~module_state_2:sight_mode
+		if (client)
+			client.screen -= module_state_2
+		contents -= module_state_2
+		module_active = null
+		module_state_2:loc = module
+		module_state_2 = null
+		inv2.icon_state = "inv2"
+	else if(module_state_3 == module_active)
+		if(istype(module_state_3,/obj/item/borg/sight))
+			sight_mode &= ~module_state_3:sight_mode
+		if (client)
+			client.screen -= module_state_3
+		contents -= module_state_3
+		module_active = null
+		module_state_3:loc = module
+		module_state_3 = null
+		inv3.icon_state = "inv3"
+	updateicon()
 
 /mob/living/silicon/robot/proc/uneq_all()
-	uneq_module(module_state_1)
-	uneq_module(module_state_2)
-	uneq_module(module_state_3)
+	module_active = null
 
-/mob/living/silicon/robot/proc/uneq_numbered(var/module)
-	if(module < 1 || module > 3) return
-
-	switch(module)
-		if(1)
-			uneq_module(module_state_1)
-		if(2)
-			uneq_module(module_state_2)
-		if(3)
-			uneq_module(module_state_3)
+	if(module_state_1)
+		if(istype(module_state_1,/obj/item/borg/sight))
+			sight_mode &= ~module_state_1:sight_mode
+		if (client)
+			client.screen -= module_state_1
+		contents -= module_state_1
+		module_state_1:loc = module
+		module_state_1 = null
+		inv1.icon_state = "inv1"
+	if(module_state_2)
+		if(istype(module_state_2,/obj/item/borg/sight))
+			sight_mode &= ~module_state_2:sight_mode
+		if (client)
+			client.screen -= module_state_2
+		contents -= module_state_2
+		module_state_2:loc = module
+		module_state_2 = null
+		inv2.icon_state = "inv2"
+	if(module_state_3)
+		if(istype(module_state_3,/obj/item/borg/sight))
+			sight_mode &= ~module_state_3:sight_mode
+		if (client)
+			client.screen -= module_state_3
+		contents -= module_state_3
+		module_state_3:loc = module
+		module_state_3 = null
+		inv3.icon_state = "inv3"
+	updateicon()
 
 /mob/living/silicon/robot/proc/activated(obj/item/O)
 	if(module_state_1 == O)
@@ -102,13 +94,7 @@
 		return 1
 	else
 		return 0
-
-/mob/living/silicon/robot/drop_item()
-	var/obj/item/I = get_active_hand()
-	if(istype(I, /obj/item/weapon/gripper))
-		var/obj/item/weapon/gripper/G = I
-		G.drop_item_p(silent = 1)
-	return
+	updateicon()
 
 //Helper procs for cyborg modules on the UI.
 //These are hackish but they help clean up code elsewhere.
@@ -216,28 +202,50 @@
 
 	var/slot_num
 	if(slot_start == 0)
-		slot_num = 0
-		slot_start = 3
+		slot_num = 1
+		slot_start = 2
 	else
-		slot_num = slot_start
+		slot_num = slot_start + 1
 
-	do
-		slot_num++
-		if(slot_num > 3) slot_num = 1 //Wrap around.
+	while(slot_start != slot_num) //If we wrap around without finding any free slots, just give up.
 		if(module_active(slot_num))
 			select_module(slot_num)
 			return
-	while(slot_start != slot_num) //If we wrap around without finding any free slots, just give up.
+		slot_num++
+		if(slot_num > 3) slot_num = 1 //Wrap around.
 
 	return
 
-/mob/living/silicon/robot/unEquip(obj/item/I)
-	if(I == module_active)
-		deselect_module(get_selected_module())
-	return ..()
-
-/mob/living/silicon/robot/proc/update_module_icon()
-	if(!module)
-		hands.icon_state = "nomod"
+/mob/living/silicon/robot/proc/activate_module(var/obj/item/O)
+	if(!(locate(O) in src.module.modules) && O != src.module.emag)
+		return
+	if(activated(O))
+		to_chat(src, "<span class='notice'>Already activated</span>")
+		return
+	if(!module_state_1)
+		module_state_1 = O
+		O.hud_layerise()
+		O.screen_loc = inv1.screen_loc
+		contents += O
+		if(istype(module_state_1,/obj/item/borg/sight))
+			sight_mode |= module_state_1:sight_mode
+	else if(!module_state_2)
+		module_state_2 = O
+		O.hud_layerise()
+		O.screen_loc = inv2.screen_loc
+		contents += O
+		if(istype(module_state_2,/obj/item/borg/sight))
+			sight_mode |= module_state_2:sight_mode
+	else if(!module_state_3)
+		module_state_3 = O
+		O.hud_layerise()
+		O.screen_loc = inv3.screen_loc
+		contents += O
+		if(istype(module_state_3,/obj/item/borg/sight))
+			sight_mode |= module_state_3:sight_mode
 	else
-		hands.icon_state = lowertext(module.module_type)
+		to_chat(src, "<span class='notice'>You need to disable a module first!</span>")
+
+/mob/living/silicon/robot/put_in_hands(var/obj/item/W) // No hands.
+	W.forceMove(get_turf(src))
+	return 1

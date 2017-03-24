@@ -4,8 +4,6 @@
 	icon_state = "cabinet_closed"
 	icon_closed = "cabinet_closed"
 	icon_opened = "cabinet_open"
-	burn_state = FLAMMABLE
-	burntime = 20
 
 /obj/structure/closet/cabinet/update_icon()
 	if(!opened)
@@ -61,16 +59,16 @@
 	..()
 	new /obj/item/clothing/glasses/eyepatch(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/clothing/gloves/combat(src)
-	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/gloves/thick/swat(src)
+	new /obj/item/clothing/gloves/thick/swat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/clothing/shoes/combat/swat(src)
-	new /obj/item/clothing/shoes/combat/swat(src)
-	new /obj/item/clothing/suit/space/deathsquad(src)
-	new /obj/item/clothing/suit/space/deathsquad(src)
+	new /obj/item/clothing/shoes/swat(src)
+	new /obj/item/clothing/shoes/swat(src)
+	new /obj/item/clothing/suit/space/void/swat(src)
+	new /obj/item/clothing/suit/space/void/swat(src)
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 	new /obj/item/clothing/under/syndicate/tacticool(src)
 
@@ -83,6 +81,9 @@
 	icon_opened = "syndicateopen"
 	anchored = 1
 
+/obj/structure/closet/thunderdome/New()
+	..()
+
 /obj/structure/closet/thunderdome/tdred
 	name = "red-team Thunderdome closet"
 
@@ -91,15 +92,15 @@
 	new /obj/item/clothing/suit/armor/tdome/red(src)
 	new /obj/item/clothing/suit/armor/tdome/red(src)
 	new /obj/item/clothing/suit/armor/tdome/red(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
+	new /obj/item/weapon/melee/energy/sword(src)
+	new /obj/item/weapon/melee/energy/sword(src)
+	new /obj/item/weapon/melee/energy/sword(src)
 	new /obj/item/weapon/gun/energy/laser(src)
 	new /obj/item/weapon/gun/energy/laser(src)
 	new /obj/item/weapon/gun/energy/laser(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
+	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
@@ -118,19 +119,18 @@
 	new /obj/item/clothing/suit/armor/tdome/green(src)
 	new /obj/item/clothing/suit/armor/tdome/green(src)
 	new /obj/item/clothing/suit/armor/tdome/green(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
+	new /obj/item/weapon/melee/energy/sword(src)
+	new /obj/item/weapon/melee/energy/sword(src)
+	new /obj/item/weapon/melee/energy/sword(src)
 	new /obj/item/weapon/gun/energy/laser(src)
 	new /obj/item/weapon/gun/energy/laser(src)
 	new /obj/item/weapon/gun/energy/laser(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
+	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/clothing/head/helmet/thunderdome(src)
 	new /obj/item/clothing/head/helmet/thunderdome(src)
 	new /obj/item/clothing/head/helmet/thunderdome(src)
-

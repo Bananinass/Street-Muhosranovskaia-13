@@ -1,170 +1,99 @@
 /atom/movable
-	layer = 3
+	plane = OBJ_PLANE
+
 	appearance_flags = TILE_BOUND
 	var/last_move = null
 	var/anchored = 0
 	// var/elevation = 2    - not used anywhere
 	var/move_speed = 10
 	var/l_move_time = 1
+	var/m_flag = 1
 	var/throwing = 0
 	var/thrower
 	var/turf/throw_source = null
 	var/throw_speed = 2
 	var/throw_range = 7
-	var/no_spin_thrown = 0 //set this to 1 if you don't want an item that you throw to spin, no matter what. -Fox
 	var/moved_recently = 0
 	var/mob/pulledby = null
-	var/inertia_dir = 0
-
-	var/area/areaMaster
+	var/item_state = null // Used to specify the item state for the on-mob overlays.
 
 	var/auto_init = 1
 
 /atom/movable/New()
-	. = ..()
-	areaMaster = get_area_master(src)
-
-	// If you're wondering what goofery this is, this is for things that need the environment
-	// around them set up - like `air_update_turf` and the like
-	if((ticker && ticker.current_state == GAME_STATE_PLAYING))
-		attempt_init()
-
-/atom/movable/Destroy()
-	for(var/atom/movable/AM in contents)
-		qdel(AM)
-	var/turf/un_opaque
-	if(opacity && isturf(loc))
-		un_opaque = loc
-
-	loc = null
-	if(un_opaque)
-		un_opaque.recalc_atom_opacity()
-	if(pulledby)
-		if(pulledby.pulling == src)
-			pulledby.pulling = null
-		pulledby = null
-	return ..()
-
-// used to provide a good interface for the init delay system to step in
-// and we don't need to call `get_turf` until the game's started
-// at which point object creations are a fair toss more seldom
-/atom/movable/proc/attempt_init()
-	var/turf/T = get_turf(src)
-	if(T && space_manager.is_zlevel_dirty(T.z))
-		space_manager.postpone_init(T.z, src)
-	else if(auto_init)
+	..()
+	if(auto_init && (initialization_stage & INITIALIZATION_HAS_BEGUN))
 		initialize()
 
+/atom/movable/Del()
+	if(isnull(gcDestroyed) && loc)
+		testing("GC: -- [type] was deleted via del() rather than qdel() --")
+		crash_with("GC: -- [type] was deleted via del() rather than qdel() --") // stick a stack trace in the runtime logs
+//	else if(isnull(gcDestroyed))
+//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
+//	else
+//		testing("GC: [type] was deleted via GC with qdel()")
+	..()
+
+/atom/movable/Destroy()
+	. = ..()
+	for(var/atom/movable/AM in src)
+		qdel(AM)
+	forceMove(null)
+	if (pulledby)
+		if (pulledby.pulling == src)
+			pulledby.pulling = null
+		pulledby = null
+
 /atom/movable/proc/initialize()
-	return
+	if(rad_power)
+		radiation_repository.sources.Add(src)
 
-// Used in shuttle movement and AI eye stuff.
-// Primarily used to notify objects being moved by a shuttle/bluespace fuckup.
-/atom/movable/proc/setLoc(var/T, var/teleported=0)
-	loc = T
+	if(!isnull(gcDestroyed))
+		crash_with("GC: -- [type] had initialize() called after qdel() --")
 
-/atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
-	var/atom/oldloc = loc
-
-	if(loc != newloc)
-		if(!(direct & (direct - 1))) //Cardinal move
-			. = ..()
-		else //Diagonal move, split it into cardinal moves
-			if(direct & 1)
-				if(direct & 4)
-					if(step(src, NORTH))
-						. = step(src, EAST)
-					else if(step(src, EAST))
-						. = step(src, NORTH)
-				else if(direct & 8)
-					if(step(src, NORTH))
-						. = step(src, WEST)
-					else if(step(src, WEST))
-						. = step(src, NORTH)
-			else if(direct & 2)
-				if(direct & 4)
-					if(step(src, SOUTH))
-						. = step(src, EAST)
-					else if(step(src, EAST))
-						. = step(src, SOUTH)
-				else if(direct & 8)
-					if(step(src, SOUTH))
-						. = step(src, WEST)
-					else if(step(src, WEST))
-						. = step(src, SOUTH)
-
-
-	if(!loc || (loc == oldloc && oldloc != newloc))
-		last_move = 0
-		return
-
-	last_move = direct
-	src.move_speed = world.time - src.l_move_time
-	src.l_move_time = world.time
-
-	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
-		if(loc && direct && last_move == direct)
-			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
-				newtonian_move(last_move)
-
-	if(. && buckled_mob && !handle_buckled_mob_movement(loc, direct)) //movement failed due to buckled mob
-		. = 0
-
-
-// Previously known as Crossed()
-// This is automatically called when something enters your square
-/atom/movable/Crossed(atom/movable/AM)
-	return
-
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, sendBump)
+/atom/movable/Bump(var/atom/A, yes)
 	if(src.throwing)
 		src.throw_impact(A)
+		src.throwing = 0
 
-	if(A && sendBump)
-		A.last_bumped = world.time
-		A.Bumped(src)
-	else
-		..()
+	spawn(0)
+		if (A && yes)
+			A.last_bumped = world.time
+			A.Bumped(src)
+		return
+	..()
+	return
 
 /atom/movable/proc/forceMove(atom/destination)
-	var/turf/old_loc = loc
+	if(loc == destination)
+		return 0
+	var/is_origin_turf = isturf(loc)
+	var/is_destination_turf = isturf(destination)
+	// It is a new area if:
+	//  Both the origin and destination are turfs with different areas.
+	//  When either origin or destination is a turf and the other is not.
+	var/is_new_area = (is_origin_turf ^ is_destination_turf) || (is_origin_turf && is_destination_turf && loc.loc != destination.loc)
+
+	var/atom/origin = loc
 	loc = destination
 
-	if(old_loc)
-		old_loc.Exited(src, destination)
-		for(var/atom/movable/AM in old_loc)
-			AM.Uncrossed(src)
+	if(origin)
+		origin.Exited(src, destination)
+		if(is_origin_turf)
+			for(var/atom/movable/AM in origin)
+				AM.Uncrossed(src)
+			if(is_new_area && is_origin_turf)
+				origin.loc.Exited(src, destination)
 
 	if(destination)
-		destination.Entered(src)
-		for(var/atom/movable/AM in destination)
-			AM.Crossed(src)
-
-		if(isturf(destination) && opacity)
-			var/turf/new_loc = destination
-			new_loc.reconsider_lights()
-
-	if(isturf(old_loc) && opacity)
-		old_loc.reconsider_lights()
-
-	for(var/datum/light_source/L in light_sources)
-		L.source_atom.update_light()
-
+		destination.Entered(src, origin)
+		if(is_destination_turf) // If we're entering a turf, cross all movable atoms
+			for(var/atom/movable/AM in loc)
+				if(AM != src)
+					AM.Crossed(src)
+			if(is_new_area && is_destination_turf)
+				destination.loc.Entered(src, origin)
 	return 1
-
-/mob/living/forceMove(atom/destination)
-	if(buckled)
-		addtimer(src, "check_buckled", 1, TRUE)
-	if(buckled_mob)
-		addtimer(buckled_mob, "check_buckled", 1, TRUE)
-	if(pulling)
-		addtimer(src, "check_pull", 1, TRUE)
-	. = ..()
-	if(client)
-		reset_perspective(destination)
-	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
-
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom, var/speed)
@@ -175,7 +104,7 @@
 	else if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
-			step(O, src.dir)
+			step(O, src.last_move)
 		O.hitby(src,speed)
 
 	else if(isturf(hit_atom))
@@ -183,42 +112,10 @@
 		var/turf/T = hit_atom
 		if(T.density)
 			spawn(2)
-				step(src, turn(src.dir, 180))
+				step(src, turn(src.last_move, 180))
 			if(istype(src,/mob/living))
 				var/mob/living/M = src
 				M.turf_collision(T, speed)
-
-
-//Called whenever an object moves and by mobs when they attempt to move themselves through space
-//And when an object or action applies a force on src, see newtonian_move() below
-//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
-//movement_dir == 0 when stopping or any dir when trying to move
-/atom/movable/proc/Process_Spacemove(var/movement_dir = 0)
-	if(has_gravity(src))
-		return 1
-
-	if(pulledby && !pulledby.pulling)
-		return 1
-
-	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
-		return 1
-
-	return 0
-
-/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
-
-	if(!loc || Process_Spacemove(0))
-		inertia_dir = 0
-		return 0
-
-	inertia_dir = direction
-	if(!direction)
-		return 1
-
-	var/old_dir = dir
-	. = step(src, direction)
-	dir = old_dir
 
 //decided whether a movable atom being thrown can pass through the turf it is in.
 /atom/movable/proc/hit_check(var/speed)
@@ -231,33 +128,32 @@
 			if(isobj(A))
 				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
 					src.throw_impact(A,speed)
-					
-/atom/movable/proc/throw_at_fast(atom/target, range, speed, thrower, no_spin)
-	set waitfor = 0
-	throw_at(target, range, speed, thrower, no_spin)
 
-/atom/movable/proc/throw_at(atom/target, range, speed, thrower, no_spin)
-	if(!target || !src || (flags & NODROP))
+/atom/movable/proc/throw_at(atom/target, range, speed, thrower)
+	if(!target || !src)
+		return 0
+	if(target.z != src.z)
 		return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
-
 	src.throwing = 1
 	src.thrower = thrower
 	src.throw_source = get_turf(src)	//store the origin turf
-	if(target.allow_spin) // turns out 1000+ spinning objects being thrown at the singularity creates lag - Iamgoofball
-		if(!no_spin_thrown && !no_spin)
-			SpinAnimation(5, 1)
+	src.pixel_z = 0
+	if(usr)
+		if(HULK in usr.mutations)
+			src.throwing = 2 // really strong throw!
+
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
 
 	var/dx
-	if(target.x > src.x)
+	if (target.x > src.x)
 		dx = EAST
 	else
 		dx = WEST
 
 	var/dy
-	if(target.y > src.y)
+	if (target.y > src.y)
 		dy = NORTH
 	else
 		dy = SOUTH
@@ -266,13 +162,16 @@
 	var/area/a = get_area(src.loc)
 	if(dist_x > dist_y)
 		var/error = dist_x/2 - dist_y
+
+
+
 		while(src && target &&((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
 			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
 			if(error < 0)
 				var/atom/step = get_step(src, dy)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
 					break
-				src.Move(step, get_dir(loc, step))
+				src.Move(step)
 				hit_check(speed)
 				error += dist_x
 				dist_travelled++
@@ -329,7 +228,7 @@
 	src.throwing = 0
 	src.thrower = null
 	src.throw_source = null
-
+	fall()
 
 //Overlays
 /atom/movable/overlay
@@ -337,53 +236,54 @@
 	anchored = 1
 
 /atom/movable/overlay/New()
-	verbs.Cut()
-	return
+	src.verbs.Cut()
+	..()
 
-/atom/movable/overlay/attackby(a, b, c)
-	if(src.master)
-		return src.master.attackby(a, b, c)
-	return
+/atom/movable/overlay/Destroy()
+	master = null
+	. = ..()
 
+/atom/movable/overlay/attackby(a, b)
+	if (src.master)
+		return src.master.attackby(a, b)
+	return
 
 /atom/movable/overlay/attack_hand(a, b, c)
-	if(src.master)
+	if (src.master)
 		return src.master.attack_hand(a, b, c)
 	return
 
+/atom/movable/proc/touch_map_edge()
+	if(!z || (z in using_map.sealed_levels))
+		return
 
-/atom/movable/proc/water_act(var/volume, var/temperature, var/source) //amount of water acting : temperature of water in kelvin : object that called it (for shennagins)
-	return 1
+	if(!universe.OnTouchMapEdge(src))
+		return
 
-/atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
-	if(!buckled_mob.Move(newloc, direct))
-		loc = buckled_mob.loc
-		last_move = buckled_mob.last_move
-		inertia_dir = last_move
-		buckled_mob.inertia_dir = last_move
-		return 0
-	return 1
+	if(using_map.use_overmap)
+		overmap_spacetravel(get_turf(src), src)
+		return
 
-/atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(buckled_mob == mover)
-		return 1
-	return ..()
+	var/new_x
+	var/new_y
+	var/new_z = using_map.get_transit_zlevel(z)
+	if(new_z)
+		if(x <= TRANSITIONEDGE)
+			new_x = world.maxx - TRANSITIONEDGE - 2
+			new_y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
-/atom/movable/proc/get_spacemove_backup()
-	var/atom/movable/dense_object_backup
-	for(var/A in orange(1, get_turf(src)))
-		if(isarea(A))
-			continue
-		else if(isturf(A))
-			var/turf/turf = A
-			if(!turf.density)
-				continue
-			return turf
-		else
-			var/atom/movable/AM = A
-			if(!AM.CanPass(src) || AM.density)
-				if(AM.anchored)
-					return AM
-				dense_object_backup = AM
-				break
-	. = dense_object_backup
+		else if (x >= (world.maxx - TRANSITIONEDGE + 1))
+			new_x = TRANSITIONEDGE + 1
+			new_y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
+
+		else if (y <= TRANSITIONEDGE)
+			new_y = world.maxy - TRANSITIONEDGE -2
+			new_x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+
+		else if (y >= (world.maxy - TRANSITIONEDGE + 1))
+			new_y = TRANSITIONEDGE + 1
+			new_x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+
+		var/turf/T = locate(new_x, new_y, new_z)
+		if(T)
+			forceMove(T)

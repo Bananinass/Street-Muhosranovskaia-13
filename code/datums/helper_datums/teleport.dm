@@ -1,22 +1,21 @@
 //wrapper
 /proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
-	var/datum/teleport/instant/science/D = new
-	if(D.start(arglist(args)))
-		return 1
-	return 0
+	new /datum/teleport/instant/science(arglist(args))
+	return
 
 /datum/teleport
 	var/atom/movable/teleatom //atom to teleport
 	var/atom/destination //destination to teleport to
 	var/precision = 0 //teleport precision
-	var/datum/effect/system/effectin //effect to show right before teleportation
-	var/datum/effect/system/effectout //effect to show right after teleportation
+	var/datum/effect/effect/system/effectin //effect to show right before teleportation
+	var/datum/effect/effect/system/effectout //effect to show right after teleportation
 	var/soundin //soundfile to play before teleportation
 	var/soundout //soundfile to play after teleportation
 	var/force_teleport = 1 //if false, teleport will use Move() proc (dense objects will prevent teleportation)
 
 
-/datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
+/datum/teleport/New(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
+	..()
 	if(!initTeleport(arglist(args)))
 		return 0
 	return 1
@@ -59,27 +58,27 @@
 
 //custom effects must be properly set up first for instant-type teleports
 //optional
-/datum/teleport/proc/setEffects(datum/effect/system/aeffectin=null,datum/effect/system/aeffectout=null)
+/datum/teleport/proc/setEffects(datum/effect/effect/system/aeffectin=null,datum/effect/effect/system/aeffectout=null)
 	effectin = istype(aeffectin) ? aeffectin : null
 	effectout = istype(aeffectout) ? aeffectout : null
 	return 1
 
 //optional
 /datum/teleport/proc/setForceTeleport(afteleport)
-	force_teleport = afteleport
-	return 1
+		force_teleport = afteleport
+		return 1
 
 //optional
 /datum/teleport/proc/setSounds(asoundin=null,asoundout=null)
-	soundin = isfile(asoundin) ? asoundin : null
-	soundout = isfile(asoundout) ? asoundout : null
-	return 1
+		soundin = isfile(asoundin) ? asoundin : null
+		soundout = isfile(asoundout) ? asoundout : null
+		return 1
 
 //placeholder
 /datum/teleport/proc/teleportChecks()
-	return 1
+		return 1
 
-/datum/teleport/proc/playSpecials(atom/location,datum/effect/system/effect,sound)
+/datum/teleport/proc/playSpecials(atom/location,datum/effect/effect/system/effect,sound)
 	if(location)
 		if(effect)
 			spawn(-1)
@@ -99,12 +98,7 @@
 	var/turf/curturf = get_turf(teleatom)
 	var/area/destarea = get_area(destination)
 	if(precision)
-		var/list/posturfs = list()
-		var/center = get_turf(destination)
-		if(!center)
-			center = destination
-		for(var/turf/T in range(precision,center))
-			posturfs.Add(T)
+		var/list/posturfs = circlerangeturfs(destination,precision)
 		destturf = safepick(posturfs)
 	else
 		destturf = get_turf(destination)
@@ -114,17 +108,19 @@
 
 	playSpecials(curturf,effectin,soundin)
 
+	var/obj/structure/bed/chair/C = null
+	if(isliving(teleatom))
+		var/mob/living/L = teleatom
+		if(L.buckled)
+			C = L.buckled
 	if(force_teleport)
 		teleatom.forceMove(destturf)
 		playSpecials(destturf,effectout,soundout)
 	else
 		if(teleatom.Move(destturf))
 			playSpecials(destturf,effectout,soundout)
-
-	if(isliving(teleatom))
-		var/mob/living/L = teleatom
-		if(L.buckled)
-			L.buckled.unbuckle_mob()
+	if(C)
+		C.forceMove(destturf)
 
 	destarea.Entered(teleatom)
 
@@ -137,18 +133,15 @@
 
 /datum/teleport/instant //teleports when datum is created
 
-	start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
-		if(..())
-			if(teleport())
-				return 1
-		return 0
+/datum/teleport/instant/New(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
+	if(..())
+		teleport()
+	return
 
 
-/datum/teleport/instant/science
-
-/datum/teleport/instant/science/setEffects(datum/effect/system/aeffectin,datum/effect/system/aeffectout)
-	if(aeffectin==null || aeffectout==null)
-		var/datum/effect/system/spark_spread/aeffect = new
+/datum/teleport/instant/science/setEffects(datum/effect/effect/system/aeffectin,datum/effect/effect/system/aeffectout)
+	if(!aeffectin || !aeffectout)
+		var/datum/effect/effect/system/spark_spread/aeffect = new
 		aeffect.set_up(5, 1, teleatom)
 		effectin = effectin || aeffect
 		effectout = effectout || aeffect
@@ -166,5 +159,32 @@
 		precision = max(rand(1,100)*bagholding.len,100)
 		if(istype(teleatom, /mob/living))
 			var/mob/living/MM = teleatom
-			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
+			to_chat(MM, "<span class='danger'>The Bluespace interface on your [teleatom] interferes with the teleport!</span>")
+	return 1
+
+/datum/teleport/instant/science/teleportChecks()
+	if(istype(teleatom, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
+		teleatom.visible_message("<span class='danger'>\The [teleatom] bounces off of the portal!</span>")
+		return 0
+
+	if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/disk/nuclear)))
+		if(istype(teleatom, /mob/living))
+			var/mob/living/MM = teleatom
+			MM.visible_message("<span class='danger'>\The [MM] bounces off of the portal!</span>","<span class='warning'>Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>")
+		else
+			teleatom.visible_message("<span class='danger'>\The [teleatom] bounces off of the portal!</span>")
+		return 0
+
+	if(destination.z in using_map.admin_levels) //centcomm z-level
+		if(istype(teleatom, /obj/mecha))
+			var/obj/mecha/MM = teleatom
+			to_chat(MM.occupant, "<span class='danger'>\The [MM] would not survive the jump to a location so far away!</span>")
+			return 0
+		if(!isemptylist(teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)))
+			teleatom.visible_message("<span class='danger'>\The [teleatom] bounces off of the portal!</span>")
+			return 0
+
+
+	if(destination.z > max_default_z_level()) //Away mission z-levels
+		return 0
 	return 1

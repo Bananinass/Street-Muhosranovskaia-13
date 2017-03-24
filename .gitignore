@@ -1,22 +1,21 @@
 #ignore misc BYOND files
+Thumbs.db
 *.log
 *.int
 *.rsc
 *.dmb
 *.lk
-
-#ignore any files in config/, except those in subdirectories.
-/config/*
-!config/**/*/
-
-#ignore other, specific files and folers
+*.backup
+*.before
 data/
-/_maps/map_files/backup/*
-/_maps/map_files/**/backup/*
-/_maps/map_files/**/*.dmm.backup
-/_maps/quicksave/*
-/nano/debug.html
-**/__pycache__/*
-*.db
-stddef.dm
-.atom-build.json
+cfg/
+build_log.txt
+use_map
+stopserver
+reboot_called
+atupdate
+__pycache__
+
+# ignore config, but not subdirs
+config/*
+!config/*/

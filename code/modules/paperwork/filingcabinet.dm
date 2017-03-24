@@ -16,7 +16,12 @@
 	icon_state = "filingcabinet"
 	density = 1
 	anchored = 1
-
+	var/list/can_hold = list(
+		/obj/item/weapon/paper,
+		/obj/item/weapon/folder,
+		/obj/item/weapon/photo,
+		/obj/item/weapon/paper_bundle,
+		/obj/item/weapon/sample)
 
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"
@@ -29,12 +34,12 @@
 
 /obj/structure/filingcabinet/initialize()
 	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
+		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/weapon/paper_bundle))
 			I.loc = src
 
 
-/obj/structure/filingcabinet/attackby(obj/item/P as obj, mob/user as mob, params)
-	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/weapon/paper_bundle) || istype(P, /obj/item/documents))
+/obj/structure/filingcabinet/attackby(obj/item/P as obj, mob/user as mob)
+	if(is_type_in_list(P, can_hold))
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		user.drop_item()
 		P.loc = src
@@ -58,11 +63,9 @@
 	user.set_machine(src)
 	var/dat = "<center><table>"
 	for(var/obj/item/P in src)
-		dat += "<tr><td><a href='?src=[UID()];retrieve=\ref[P]'>[P.name]</a></td></tr>"
+		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[P.name]</a></td></tr>"
 	dat += "</table></center>"
-	var/datum/browser/popup = new(user, "filingcabinet", name, 350, 300)
-	popup.set_content(dat)
-	popup.open(0)
+	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
 
 	return
 
@@ -85,7 +88,7 @@
 
 /obj/structure/filingcabinet/Topic(href, href_list)
 	if(href_list["retrieve"])
-		usr << browse(null, "window=filingcabinet") // Close the menu
+		usr << browse("", "window=filingcabinet") // Close the menu
 
 		//var/retrieveindex = text2num(href_list["retrieve"])
 		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
@@ -122,7 +125,7 @@
 				P.info += "[S.fields["com_[counter]"]]<BR>"
 				counter++
 			P.info += "</TT>"
-			P.name = "paper - '[G.fields["name"]]'"
+			P.name = "Security Record ([G.fields["name"]])"
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 	..()
@@ -149,16 +152,18 @@
 				if((R.fields["name"] == G.fields["name"] || R.fields["id"] == G.fields["id"]))
 					M = R
 					break
-			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
-			P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
-			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
-			P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [M.fields["b_type"]]<BR>\nDNA: [M.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [M.fields["mi_dis"]]<BR>\nDetails: [M.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [M.fields["ma_dis"]]<BR>\nDetails: [M.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [M.fields["alg"]]<BR>\nDetails: [M.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [M.fields["cdi"]] (per disease info placed in log/comment section)<BR>\nDetails: [M.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[M.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
-			var/counter = 1
-			while(M.fields["com_[counter]"])
-				P.info += "[M.fields["com_[counter]"]]<BR>"
-				counter++
-			P.info += "</TT>"
-			P.name = "paper - '[G.fields["name"]]'"
+			if(M)
+				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
+				P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
+				P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
+
+				P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [M.fields["b_type"]]<BR>\nDNA: [M.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [M.fields["mi_dis"]]<BR>\nDetails: [M.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [M.fields["ma_dis"]]<BR>\nDetails: [M.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [M.fields["alg"]]<BR>\nDetails: [M.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [M.fields["cdi"]] (per disease info placed in log/comment section)<BR>\nDetails: [M.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[M.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+				var/counter = 1
+				while(M.fields["com_[counter]"])
+					P.info += "[M.fields["com_[counter]"]]<BR>"
+					counter++
+				P.info += "</TT>"
+				P.name = "Medical Record ([G.fields["name"]])"
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
 	..()

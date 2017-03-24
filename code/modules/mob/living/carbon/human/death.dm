@@ -1,200 +1,112 @@
 /mob/living/carbon/human/gib()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	notransform = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-	if(!isSynthetic())
-		animation = new(loc)
-		animation.icon_state = "blank"
-		animation.icon = 'icons/mob/mob.dmi'
-		animation.master = src
 
-		playsound(src.loc, 'sound/goonstation/effects/gib.ogg', 50, 1)
-	else
-		playsound(src.loc, 'sound/goonstation/effects/robogib.ogg', 50, 1)
-
-	for(var/obj/item/organ/internal/I in internal_organs)
-		if(isturf(loc))
-			var/atom/movable/thing = I.remove(src)
-			thing.forceMove(get_turf(src))
-			spawn()
-				thing.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
+	for(var/obj/item/organ/I in internal_organs)
+		I.removed()
+		if(istype(loc,/turf))
+			I.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),30)
 
 	for(var/obj/item/organ/external/E in src.organs)
-		if(istype(E, /obj/item/organ/external/chest))
-			continue
-		// Only make the limb drop if it's not too damaged
-		if(prob(100 - E.get_damage()))
-			// Override the current limb status and don't cause an explosion
-			E.droplimb(DROPLIMB_EDGE)
+		E.droplimb(0,DROPLIMB_EDGE,1)
 
-	for(var/mob/M in src)
-		if(M in stomach_contents)
-			stomach_contents.Remove(M)
-		M.forceMove(get_turf(src))
-		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
+	sleep(1)
 
-	if(!isSynthetic())
-		flick("gibbed-h", animation)
-		hgibs(loc, viruses, dna)
-	else
-		new /obj/effect/decal/cleanable/blood/gibs/robot(loc)
-		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
+	for(var/obj/item/I in src)
+		drop_from_inventory(I)
+		I.throw_at(get_edge_target_turf(src,pick(alldirs)), rand(1,3), round(30/I.w_class))
 
-	spawn(15)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
+	..(species.gibbed_anim)
+	gibs(loc, dna, null, species.get_flesh_colour(src), species.get_blood_colour(src))
 
 /mob/living/carbon/human/dust()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	notransform = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("dust-h", animation)
-	new species.remains_type(get_turf(src))
-
-	spawn(15)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
-
-/mob/living/carbon/human/melt()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	notransform = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("liquify", animation)
-	//new /obj/effect/decal/remains/human(loc)
-
-	spawn(15)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
+	if(species)
+		..(species.dusted_anim, species.remains_type)
+	else
+		..()
 
 /mob/living/carbon/human/death(gibbed)
-	if(stat == DEAD)	return
-	if(healths)		healths.icon_state = "health5"
 
-	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
+	if(stat == DEAD) return
 
-	stat = DEAD
-	SetDizzy(0)
-	SetJitter(0)
-	heart_attack = 0
+	BITSET(hud_updateflag, HEALTH_HUD)
+	BITSET(hud_updateflag, STATUS_HUD)
+	BITSET(hud_updateflag, LIFE_HUD)
+
+	//backs up lace if available.
+	var/obj/item/organ/internal/stack/s = get_organ(BP_STACK)
+	if(s)
+		s.do_backup()
 
 	//Handle species-specific deaths.
-	if(species) species.handle_death(src)
+	species.handle_death(src)
+
+	animate_tail_stop()
 
 	//Handle brain slugs.
-	var/obj/item/organ/external/head = get_organ("head")
+	var/obj/item/organ/external/head = get_organ(BP_HEAD)
 	var/mob/living/simple_animal/borer/B
 
-	if(istype(head))
-		for(var/I in head.implants)
-			if(istype(I,/mob/living/simple_animal/borer))
-				B = I
+	for(var/I in head.implants)
+		if(istype(I,/mob/living/simple_animal/borer))
+			B = I
 	if(B)
-		if(B.controlling && B.host == src)
-			B.detatch()
+		if(!B.ckey && ckey && B.controlling)
+			B.ckey = ckey
+			B.controlling = 0
+		if(B.host_brain.ckey)
+			ckey = B.host_brain.ckey
+			B.host_brain.ckey = null
+			B.host_brain.name = "host brain"
+			B.host_brain.real_name = "host brain"
 
 		verbs -= /mob/living/carbon/proc/release_control
 
 	callHook("death", list(src, gibbed))
 
-	if(ishuman(LAssailant))
-		var/mob/living/carbon/human/H=LAssailant
-		if(H.mind)
-			H.mind.kills += "[name] ([ckey])"
-
-	if(!gibbed)
-		update_canmove()
-
-	timeofdeath = world.time
-	med_hud_set_health()
-	med_hud_set_status()
-	if(mind)	mind.store_memory("Time of death: [worldtime2text(timeofdeath)]", 0)
 	if(ticker && ticker.mode)
-//		log_to_dd("k")
 		sql_report_death(src)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+		ticker.mode.check_win()
 
 	if(wearing_rig)
 		wearing_rig.notify_ai("<span class='danger'>Warning: user death event. Mobility control passed to integrated intelligence system.</span>")
 
-	return ..(gibbed)
-
-/mob/living/carbon/human/update_revive()
-	..()
-	// Update healthdoll
-	if(healthdoll)
-		// We're alive again, so re-build the entire healthdoll
-		healthdoll.cached_healthdoll_overlays.Cut()
-
-/mob/living/carbon/human/proc/makeSkeleton()
-	var/obj/item/organ/external/head/H = get_organ("head")
-	if(SKELETON in src.mutations)	return
-
-	if(istype(H))
-		if(H.f_style)
-			H.f_style = initial(H.f_style)
-		if(H.h_style)
-			H.h_style = initial(H.h_style)
-		if(H.ha_style)
-			H.ha_style = initial(H.ha_style)
-		if(H.alt_head)
-			H.alt_head = initial(H.alt_head)
-			H.handle_alt_icon()
-	m_styles = DEFAULT_MARKING_STYLES
-	update_fhair(0)
-	update_hair(0)
-	update_head_accessory(0)
-	update_markings(0)
-
-	mutations.Add(SKELETON)
-	mutations.Add(NOCLONE)
-	status_flags |= DISFIGURED
-	update_body(0)
-	update_mutantrace()
-	return
+	. = ..(gibbed,"no message")
+	if(!gibbed)
+		handle_organs()
+		if(species.death_sound)
+			playsound(loc, species.death_sound, 80, 1, 1)
+	handle_hud_list()
 
 /mob/living/carbon/human/proc/ChangeToHusk()
-	var/obj/item/organ/external/head/H = organs_by_name["head"]
 	if(HUSK in mutations)	return
 
-	if(istype(H))
-		if(H.f_style)
-			H.f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
-		if(H.h_style)
-			H.h_style = "Bald"
-	update_fhair(0)
+	if(f_style)
+		f_style = "Shaved"		//we only change the icon_state of the hair datum, so it doesn't mess up their UI/UE
+	if(h_style)
+		h_style = "Bald"
 	update_hair(0)
 
 	mutations.Add(HUSK)
-	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
-	update_body(0)
-	update_mutantrace()
+	for(var/obj/item/organ/external/E in organs)
+		E.disfigured = 1
+	update_body(1)
 	return
 
 /mob/living/carbon/human/proc/Drain()
 	ChangeToHusk()
-	mutations |= NOCLONE
+	mutations |= HUSK
+	return
+
+/mob/living/carbon/human/proc/ChangeToSkeleton()
+	if(SKELETON in src.mutations)	return
+
+	if(f_style)
+		f_style = "Shaved"
+	if(h_style)
+		h_style = "Bald"
+	update_hair(0)
+
+	mutations.Add(SKELETON)
+	for(var/obj/item/organ/external/E in organs)
+		E.disfigured = 1
+	update_body(1)
 	return

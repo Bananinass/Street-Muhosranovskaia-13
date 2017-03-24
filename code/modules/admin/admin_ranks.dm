@@ -29,7 +29,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 				if("buildmode","build")			rights |= R_BUILDMODE
 				if("admin")						rights |= R_ADMIN
 				if("ban")						rights |= R_BAN
-				if("event")						rights |= R_EVENT
+				if("fun")						rights |= R_FUN
 				if("server")					rights |= R_SERVER
 				if("debug")						rights |= R_DEBUG
 				if("permissions","rights")		rights |= R_PERMISSIONS
@@ -37,12 +37,11 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 				if("stealth")					rights |= R_STEALTH
 				if("rejuv","rejuvinate")		rights |= R_REJUVINATE
 				if("varedit")					rights |= R_VAREDIT
-				if("everything","host","all")	rights |= R_HOST
+				if("everything","host","all")	rights |= (R_HOST | R_BUILDMODE | R_ADMIN | R_BAN | R_FUN | R_SERVER | R_DEBUG | R_PERMISSIONS | R_POSSESS | R_STEALTH | R_REJUVINATE | R_VAREDIT | R_SOUNDS | R_SPAWN | R_MOD| R_MENTOR)
 				if("sound","sounds")			rights |= R_SOUNDS
 				if("spawn","create")			rights |= R_SPAWN
 				if("mod")						rights |= R_MOD
-				if("mentor")					rights |= R_MENTOR
-				if("proccall")					rights |= R_PROCCALL
+				if("mentor")				rights |= R_MENTOR
 
 		admin_ranks[rank] = rights
 		previous_rights = rights
@@ -104,13 +103,13 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 
 		establish_db_connection()
 		if(!dbcon.IsConnected())
-			log_to_dd("Failed to connect to database in load_admins(). Reverting to legacy system.")
-			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
+			error("Failed to connect to database in load_admins(). Reverting to legacy system.")
+			log_misc("Failed to connect to database in load_admins(). Reverting to legacy system.")
 			config.admin_legacy_system = 1
 			load_admins()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM [format_table_name("admin")]")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin")
 		query.Execute()
 		while(query.NextRow())
 			var/ckey = query.item[1]
@@ -124,8 +123,8 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 			//find the client for a ckey if they are connected and associate them with the new admin datum
 			D.associate(directory[ckey])
 		if(!admin_datums)
-			log_to_dd("The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system.")
-			diary << "The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system."
+			error("The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system.")
+			log_misc("The database query in load_admins() resulted in no admins being added to the list. Reverting to legacy system.")
 			config.admin_legacy_system = 1
 			load_admins()
 			return

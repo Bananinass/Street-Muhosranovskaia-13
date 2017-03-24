@@ -1,129 +1,137 @@
-/obj/item/clothing/gloves/fingerless
-	name = "fingerless gloves"
-	desc = "Plain black gloves without fingertips for the hard working."
-	icon_state = "fingerless"
-	item_state = "fingerless"
-	item_color = null	//So they don't wash.
-	transfer_prints = TRUE
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	strip_delay = 40
-	put_on_delay = 20
-	clipped = 1
+/obj/item/clothing/gloves/captain
+	desc = "Regal blue gloves, with a nice gold trim. Swanky."
+	name = "captain's gloves"
+	icon_state = "captain"
+	item_state = "egloves"
 
 /obj/item/clothing/gloves/cyborg
-	desc = "beep boop borp"
+	desc = "Beep boop borp!"
 	name = "cyborg gloves"
 	icon_state = "black"
 	item_state = "r_hands"
+	siemens_coefficient = 1.0
 
-/obj/item/clothing/gloves/combat
-	desc = "These tactical gloves are somewhat fire and impact resistant."
-	name = "combat gloves"
-	icon_state = "combat"
-	item_state = "swat_gl"
+/obj/item/clothing/gloves/insulated
+	desc = "These gloves will protect the wearer from electric shocks."
+	name = "insulated gloves"
+	color = COLOR_YELLOW
+	icon_state = "white"
+	item_state = "lgloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	strip_delay = 80
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	burn_state = FIRE_PROOF
 
-/obj/item/clothing/gloves/botanic_leather
-	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
+/obj/item/clothing/gloves/insulated/cheap                             //Cheap Chinese Crap
+	desc = "These gloves are cheap copies of the coveted gloves, no way this can end badly."
+	name = "budget insulated gloves"
+	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
+
+/obj/item/clothing/gloves/insulated/cheap/New()
+	..()
+	//average of 0.4, better than regular gloves' 0.75
+	siemens_coefficient = pick(0, 0.1, 0.2, 0.3, 0.4, 0.6, 1.3)
+
+/obj/item/clothing/gloves/forensic
+	desc = "Specially made gloves for forensic technicians. The luminescent threads woven into the material stand out under scrutiny."
+	name = "forensic gloves"
+	icon_state = "forensic"
+	item_state = "bgloves"
+	siemens_coefficient = 0.50
+	permeability_coefficient = 0.05
+
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/gloves/thick
+	desc = "These work gloves are thick and fire-resistant."
+	name = "work gloves"
+	icon_state = "black"
+	item_state = "bgloves"
+	siemens_coefficient = 0.50
+	permeability_coefficient = 0.05
+
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/gloves/thick/swat
+	desc = "These tactical gloves are somewhat fire and impact-resistant."
+	name = "\improper SWAT Gloves"
+	item_state = "swat_gl"
+	force = 5
+	armor = list(melee = 80, bullet = 60, laser = 60,energy = 25, bomb = 50, bio = 10, rad = 0)
+
+/obj/item/clothing/gloves/thick/combat //Combined effect of SWAT gloves and insulated gloves
+	desc = "These tactical gloves are somewhat fire and impact resistant."
+	name = "combat gloves"
+	icon_state = "work"
+	item_state = "wgloves"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	force = 5
+	armor = list(melee = 80, bullet = 60, laser = 60,energy = 25, bomb = 50, bio = 10, rad = 0)
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/gloves/thick/botany
+	desc = "These leather work gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
 	name = "botanist's leather gloves"
 	icon_state = "leather"
 	item_state = "ggloves"
-	permeability_coefficient = 0.9
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	burn_state = FIRE_PROOF
 
-/obj/item/clothing/gloves/batmangloves
-	desc = "Used for handling all things bat related."
-	name = "batgloves"
-	icon_state = "bmgloves"
-	item_state = "bmgloves"
-	item_color="bmgloves"
-
-/obj/item/clothing/gloves/cursedclown
-	name = "cursed white gloves"
-	desc = "These things smell terrible, and they're all lumpy. Gross."
+/obj/item/clothing/gloves/latex
+	name = "latex gloves"
+	desc = "Sterile latex gloves."
 	icon_state = "latex"
 	item_state = "lgloves"
-	flags = NODROP
+	siemens_coefficient = 1.1 //thin latex gloves, much more conductive than fabric gloves (basically a capacitor for AC)
+	permeability_coefficient = 0.01
+	germ_level = 0
 
+/obj/item/clothing/gloves/latex/nitrile
+	name = "nitrile gloves"
+	desc = "Sterile nitrile gloves"
+	icon_state = "nitrile"
+	item_state = "ngloves"
 
-/obj/item/clothing/gloves/color/yellow/stun
-	name = "stun gloves"
-	desc = "Horrendous and awful. It smells like cancer. The fact it has wires attached to it is incidental."
-	var/obj/item/weapon/stock_parts/cell/cell = null
-	var/stun_strength = 5
-	var/stun_cost = 3750
+/obj/item/clothing/gloves/botanic_leather
+	desc = "These leather work gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
+	name = "botanist's leather gloves"
+	icon_state = "leather"
+	item_state = "ggloves"
+	permeability_coefficient = 0.05
+	siemens_coefficient = 0.50 //thick work gloves
 
-/obj/item/clothing/gloves/color/yellow/stun/New()
-	..()
-	update_icon()
+/obj/item/clothing/gloves/duty
+	desc = "These brown duty gloves are made from a durable synthetic."
+	name = "work gloves"
+	icon_state = "work"
+	item_state = "wgloves"
+	siemens_coefficient = 0.50
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 5, bomb = 0, bio = 0, rad = 0)
 
-/obj/item/clothing/gloves/color/yellow/stun/Destroy()
-	if(cell)
-		qdel(cell)
-		cell = null
-	return ..()
+/obj/item/clothing/gloves/tactical
+	desc = "These brown tactical gloves are made from a durable synthetic, and have hardened knuckles."
+	name = "tactical gloves"
+	icon_state = "work"
+	item_state = "wgloves"
+	force = 5
+	siemens_coefficient = 0.50
+	permeability_coefficient = 0.05
+	armor = list(melee = 30, bullet = 10, laser = 10, energy = 15, bomb = 20, bio = 0, rad = 0)
 
-/obj/item/clothing/gloves/color/yellow/stun/Touch(atom/A, proximity)
-	if(!ishuman(loc))
-		return FALSE //Only works while worn
-	if(!iscarbon(A))
-		return FALSE
-	if(!proximity)
-		return FALSE
-	if(cell)
-		var/mob/living/carbon/human/H = loc
-		if(H.a_intent == I_HARM)
-			var/mob/living/carbon/C = A
-			if(cell.use(stun_cost))
-				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
-				s.set_up(5, 0, loc)
-				s.start()
-				playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-				H.do_attack_animation(C)
-				visible_message("<span class='danger'>[C] has been touched with [src] by [H]!</span>")
-				C.Stun(stun_strength)
-				C.Weaken(stun_strength)
-				C.apply_effect(STUTTER, stun_strength)
-			else
-				to_chat(H, "<span class='notice'>Not enough charge!</span>")
-			return TRUE
-	return FALSE
+/obj/item/clothing/gloves/guards
+	desc = "A pair of synthetic gloves and arm pads reinforced with armor plating."
+	name = "arm guards"
+	icon_state = "guards"
+	item_state = "guards"
+	body_parts_covered = HANDS|ARMS
+	w_class = ITEM_SIZE_NORMAL
+	siemens_coefficient = 0.7
+	permeability_coefficient = 0.03
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 25, bomb = 30, bio = 0, rad = 0)
 
-/obj/item/clothing/gloves/color/yellow/stun/update_icon()
-	..()
-	overlays.Cut()
-	overlays += "gloves_wire"
-	if(cell)
-		overlays += "gloves_cell"
-
-/obj/item/clothing/gloves/color/yellow/stun/attackby(obj/item/weapon/W, mob/living/user, params)
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
-		if(!cell)
-			if(!user.drop_item())
-				to_chat(user, "<span class='warning'>[W] is stuck to you!</span>")
-				return
-			W.forceMove(src)
-			cell = W
-			to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
-			update_icon()
-		else
-			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
-
-	else if(iswirecutter(W))
-		if(cell)
-			to_chat(user, "<span class='notice'>You cut [cell] away from [src].</span>")
-			cell.forceMove(get_turf(loc))
-			cell = null
-			update_icon()

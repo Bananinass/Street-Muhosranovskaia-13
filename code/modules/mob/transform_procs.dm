@@ -1,72 +1,126 @@
 /mob/living/carbon/human/proc/monkeyize()
-	var/mob/H = src
-	H.dna.SetSEState(MONKEYBLOCK,1)
-	genemutcheck(H,MONKEYBLOCK,null,MUTCHK_FORCED)
+	if (transforming)
+		return
+	for(var/obj/item/W in src)
+		if (W==w_uniform) // will be torn
+			continue
+		drop_from_inventory(W)
+	regenerate_icons()
+	transforming = 1
+	canmove = 0
+	stunned = 1
+	icon = null
+	invisibility = 101
+	for(var/t in organs)
+		qdel(t)
+	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
+	animation.icon_state = "blank"
+	animation.icon = 'icons/mob/mob.dmi'
+	animation.master = src
+	flick("h2monkey", animation)
+	sleep(48)
+	//animation = null
+
+	transforming = 0
+	stunned = 0
+	update_canmove()
+	invisibility = initial(invisibility)
+
+	if(!species.primitive_form) //If the creature in question has no primitive set, this is going to be messy.
+		gib()
+		return
+
+	for(var/obj/item/W in src)
+		drop_from_inventory(W)
+	set_species(species.primitive_form)
+	dna.SetSEState(MONKEYBLOCK,1)
+	dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
+
+	to_chat(src, "<B>You are now [species.name]. </B>")
+	qdel(animation)
+
+	return src
 
 /mob/new_player/AIize()
 	spawning = 1
 	return ..()
 
+/mob/living/carbon/human/AIize(move=1) // 'move' argument needs defining here too because BYOND is dumb
+	if (transforming)
+		return
+	for(var/t in organs)
+		qdel(t)
+	return ..(move)
+
 /mob/living/carbon/AIize()
-	if(notransform)
+	if (transforming)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
-	notransform = 1
+		drop_from_inventory(W)
+	transforming = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 	return ..()
 
-/mob/proc/AIize()
+/mob/proc/AIize(move=1)
 	if(client)
-		src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)// stop the jams for AIs
+		sound_to(src, sound(null, repeat = 0, wait = 0, volume = 85, channel = 1))// stop the jams for AIs
 
-	var/mob/living/silicon/ai/O = new (loc,,,1)//No MMI but safety is in effect.
+
+	var/mob/living/silicon/ai/O = new (loc, using_map.default_law_type,,1)//No MMI but safety is in effect.
 	O.invisibility = 0
 	O.aiRestorePowerRoutine = 0
-
 	if(mind)
 		mind.transfer_to(O)
 		O.mind.original = O
 	else
 		O.key = key
 
-	O.on_mob_init()
+	if(move)
+		var/obj/loc_landmark
+		for(var/obj/effect/landmark/start/sloc in landmarks_list)
+			if (sloc.name != "AI")
+				continue
+			if ((locate(/mob/living) in sloc.loc) || (locate(/obj/structure/AIcore) in sloc.loc))
+				continue
+			loc_landmark = sloc
+		if (!loc_landmark)
+			for(var/obj/effect/landmark/tripai in landmarks_list)
+				if (tripai.name == "tripai")
+					if((locate(/mob/living) in tripai.loc) || (locate(/obj/structure/AIcore) in tripai.loc))
+						continue
+					loc_landmark = tripai
+		if (!loc_landmark)
+			to_chat(O, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
+			for(var/obj/effect/landmark/start/sloc in landmarks_list)
+				if (sloc.name == "AI")
+					loc_landmark = sloc
+		O.forceMove(loc_landmark.loc)
+		O.on_mob_init()
 
 	O.add_ai_verbs()
 
-	O.rename_self("AI",1)
-
-	spawn()
+	O.rename_self("ai",1)
+	spawn(0)	// Mobs still instantly del themselves, thus we need to spawn or O will never be returned
 		qdel(src)
 	return O
 
-
-
 //human -> robot
 /mob/living/carbon/human/proc/Robotize()
-	if(notransform)
+	if (transforming)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		drop_from_inventory(W)
 	regenerate_icons()
-	notransform = 1
+	transforming = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 	for(var/t in organs)
 		qdel(t)
-	for(var/i in internal_organs)
-		qdel(i)
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
-
-	// cyborgs produced by Robotize get an automatic power cell
-	O.cell = new(O)
-	O.cell.maxcharge = 7500
-	O.cell.charge = 7500
-
 
 	O.gender = gender
 	O.invisibility = 0
@@ -82,68 +136,30 @@
 
 	O.loc = loc
 	O.job = "Cyborg"
-	O.notify_ai(1)
-
-	if(O.mind && O.mind.assigned_role == "Cyborg")
+	if(O.mind.assigned_role == "Cyborg")
 		if(O.mind.role_alt_title == "Android")
-			O.mmi = new /obj/item/device/mmi/posibrain(O)
+			O.mmi = new /obj/item/device/mmi/digital/posibrain(O)
 		else if(O.mind.role_alt_title == "Robot")
-			O.mmi = null //Robots do not have removable brains.
+			O.mmi = new /obj/item/device/mmi/digital/robot(O)
 		else
 			O.mmi = new /obj/item/device/mmi(O)
 
-		if(O.mmi) O.mmi.transfer_identity(src) //Does not transfer key/client.
+		O.mmi.transfer_identity(src)
 
 	callHook("borgify", list(O))
-
-	O.update_pipe_vision()
-
 	O.Namepick()
 
-	spawn(0)//To prevent the proc from returning null.
+	spawn(0)	// Mobs still instantly del themselves, thus we need to spawn or O will never be returned
 		qdel(src)
 	return O
 
-//human -> alien
-/mob/living/carbon/human/proc/Alienize()
-	if(notransform)
-		return
-	for(var/obj/item/W in src)
-		unEquip(W)
-	regenerate_icons()
-	notransform = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-	for(var/t in organs)
-		qdel(t)
-
-	var/alien_caste = pick("Hunter","Sentinel","Drone")
-	var/mob/living/carbon/alien/humanoid/new_xeno
-	switch(alien_caste)
-		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
-		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
-		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
-
-	new_xeno.a_intent = I_HARM
-	new_xeno.key = key
-
-	to_chat(new_xeno, "<B>You are now an alien.</B>")
-	new_xeno.update_pipe_vision()
-	spawn(0)//To prevent the proc from returning null.
-		qdel(src)
-	return
-
 /mob/living/carbon/human/proc/slimeize(adult as num, reproduce as num)
-	if(notransform)
+	if (transforming)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		drop_from_inventory(W)
 	regenerate_icons()
-	notransform = 1
+	transforming = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -168,32 +184,28 @@
 	new_slime.key = key
 
 	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
-	new_slime.update_pipe_vision()
-	spawn(0)//To prevent the proc from returning null.
-		qdel(src)
+	qdel(src)
 	return
 
 /mob/living/carbon/human/proc/corgize()
-	if(notransform)
+	if (transforming)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		drop_from_inventory(W)
 	regenerate_icons()
-	notransform = 1
+	transforming = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
 	for(var/t in organs)	//this really should not be necessary
 		qdel(t)
 
-	var/mob/living/simple_animal/pet/corgi/new_corgi = new /mob/living/simple_animal/pet/corgi (loc)
-	new_corgi.a_intent = I_HARM
+	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
+	new_corgi.a_intent = I_HURT
 	new_corgi.key = key
 
 	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
-	new_corgi.update_pipe_vision()
-	spawn(0)//To prevent the proc from returning null.
-		qdel(src)
+	qdel(src)
 	return
 
 /mob/living/carbon/human/Animalize()
@@ -201,13 +213,17 @@
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
-	if(notransform)
+	if(!safe_animal(mobpath))
+		to_chat(usr, "<span class='warning'>Sorry but this mob type is currently unavailable.</span>")
+		return
+
+	if(transforming)
 		return
 	for(var/obj/item/W in src)
-		unEquip(W)
+		drop_from_inventory(W)
 
 	regenerate_icons()
-	notransform = 1
+	transforming = 1
 	canmove = 0
 	icon = null
 	invisibility = 101
@@ -218,11 +234,10 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = I_HARM
+	new_mob.a_intent = I_HURT
 
 
 	to_chat(new_mob, "You suddenly feel more... animalistic.")
-	new_mob.update_pipe_vision()
 	spawn()
 		qdel(src)
 	return
@@ -232,75 +247,68 @@
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
+	if(!safe_animal(mobpath))
+		to_chat(usr, "<span class='warning'>Sorry but this mob type is currently unavailable.</span>")
+		return
+
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = I_HARM
+	new_mob.a_intent = I_HURT
 	to_chat(new_mob, "You feel more... animalistic")
-	new_mob.update_pipe_vision()
 
 	qdel(src)
 
+/* Certain mob types have problems and should not be allowed to be controlled by players.
+ *
+ * This proc is here to force coders to manually place their mob in this list, hopefully tested.
+ * This also gives a place to explain -why- players shouldnt be turn into certain mobs and hopefully someone can fix them.
+ */
+/mob/proc/safe_animal(var/MP)
 
-/mob/living/carbon/human/proc/paize(var/name)
-	if(notransform)
-		return
-	for(var/obj/item/W in src)
-		unEquip(W)
-	regenerate_icons()
-	notransform = 1
-	canmove = 0
-	icon = null
-	invisibility = 101
-	for(var/t in organs)	//this really should not be necessary
-		qdel(t)
-
-	var/obj/item/device/paicard/card = new(loc)
-	var/mob/living/silicon/pai/pai = new(card)
-	pai.key = key
-	card.setPersonality(pai)
-
-	pai.name = name
-	pai.real_name = name
-	card.name = name
-
-	to_chat(pai, "<B>You have become a pAI! Your name is [pai.name].</B>")
-	pai.update_pipe_vision()
-	spawn(0)//To prevent the proc from returning null.
-		qdel(src)
-	return
-
-/mob/proc/safe_respawn(var/MP)
+//Bad mobs! - Remember to add a comment explaining what's wrong with the mob
 	if(!MP)
-		return 0
+		return 0	//Sanity, this should never happen.
 
-	if(ispath(MP, /mob/living/simple_animal/pet/cat))
+	if(ispath(MP, /mob/living/simple_animal/space_worm))
+		return 0 //Unfinished. Very buggy, they seem to just spawn additional space worms everywhere and eating your own tail results in new worms spawning.
+
+	if(ispath(MP, /mob/living/simple_animal/construct/behemoth))
+		return 0 //I think this may have been an unfinished WiP or something. These constructs should really have their own class simple_animal/construct/subtype
+
+	if(ispath(MP, /mob/living/simple_animal/construct/armoured))
+		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+
+	if(ispath(MP, /mob/living/simple_animal/construct/wraith))
+		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+
+	if(ispath(MP, /mob/living/simple_animal/construct/builder))
+		return 0 //Verbs do not appear for players. These constructs should really have their own class simple_animal/construct/subtype
+
+//Good mobs!
+	if(ispath(MP, /mob/living/simple_animal/cat))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/pet/corgi))
+	if(ispath(MP, /mob/living/simple_animal/corgi))
 		return 1
 	if(ispath(MP, /mob/living/simple_animal/crab))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/chicken))
+	if(ispath(MP, /mob/living/simple_animal/hostile/carp))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/cow))
+	if(ispath(MP, /mob/living/simple_animal/mushroom))
 		return 1
+	if(ispath(MP, /mob/living/simple_animal/shade))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/tomato))
+		return 1
+	if(ispath(MP, /mob/living/simple_animal/mouse))
+		return 1 //It is impossible to pull up the player panel for mice (Fixed! - Nodrak)
+	if(ispath(MP, /mob/living/simple_animal/hostile/bear))
+		return 1 //Bears will auto-attack mobs, even if they're player controlled (Fixed! - Nodrak)
 	if(ispath(MP, /mob/living/simple_animal/parrot))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/pony))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/pet/fox))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/chick))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/pet/pug))
-		return 1
-	if(ispath(MP, /mob/living/simple_animal/butterfly))
-		return 1
+		return 1 //Parrots are no longer unfinished! -Nodrak
 
-	if(ispath(MP, /mob/living/simple_animal/borer) && !jobban_isbanned(src, ROLE_BORER) && !jobban_isbanned(src, "Syndicate"))
-		return 1
-
-	if(ispath(MP, /mob/living/simple_animal/diona) && !jobban_isbanned(src, ROLE_NYMPH))
-		return 1
-
+	//Not in here? Must be untested!
 	return 0
+
+
+

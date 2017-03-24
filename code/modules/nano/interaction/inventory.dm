@@ -7,4 +7,5 @@
 	if(!(src_object in user))
 		return STATUS_CLOSE
 
+
 	return user.shared_nano_interaction()

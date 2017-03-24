@@ -1,9 +1,8 @@
 
-
 //This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as")
 
-/client/verb/adminhelp()
+/client/verb/adminhelp(msg as text)
 	set category = "Admin"
 	set name = "Adminhelp"
 
@@ -14,21 +13,13 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 
 	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
 
-	var/msg
-	var/list/type = list("Mentorhelp","Adminhelp")
-	var/selected_type = input("Pick a category.", "Admin Help", null, null) as null|anything in type
-	if(selected_type)
-		msg = input("Please enter your message.", "Admin Help", null, null) as text|null
 
 	//clean the input msg
 	if(!msg)
 		return
-
-	if(handle_spam_prevention(msg, MUTE_ADMINHELP, OOC_COOLDOWN))
+	msg = sanitize(msg)
+	if(!msg)
 		return
-
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
 	var/original_msg = msg
 
 	//explode the input msg into a list
@@ -80,86 +71,44 @@ var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","
 							mobs_found += found
 							if(!ai_found && isAI(found))
 								ai_found = 1
-							msg += "<b><font color='black'>[original_word] </font></b> "
+							msg += "<b><font color='black'>[original_word] (<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>)</font></b> "
 							continue
 			msg += "[original_word] "
 
-	if(!mob)	return						//this doesn't happen
+	if(!mob) //this doesn't happen
+		return
 
-	var/ref_mob = "\ref[mob]"
-	var/ref_client = "\ref[src]"
+	var/ai_cl
+	if(ai_found)
+		ai_cl = " (<A HREF='?_src_=holder;adminchecklaws=\ref[mob]'>CL</A>)"
 
-	//send this msg to all admins
+			//Options bar:  mob, details ( admin = 2, dev = 3, mentor = 4, character name (0 = just ckey, 1 = ckey and character name), link? (0 no don't make it a link, 1 do so),
+			//		highlight special roles (0 = everyone has same looking name, 1 = antags / special roles get a golden name)
+
+	var/mentor_msg = "<span class='notice'><b><font color=red>Request for Help: </font>[get_options_bar(mob, 4, 1, 1, 0)][ai_cl]:</b> [msg]</span>"
+	msg = "<span class='notice'><b><font color=red>Request for Help:: </font>[get_options_bar(mob, 2, 1, 1)][ai_cl]:</b> [msg]</span>"
+
 	var/admin_number_afk = 0
-	var/list/mentorholders = list()
-	var/list/modholders = list()
-	var/list/adminholders = list()
+
 	for(var/client/X in admins)
-		if(check_rights(R_ADMIN, 0, X.mob))
+		if((R_ADMIN|R_MOD|R_MENTOR) & X.holder.rights)
 			if(X.is_afk())
 				admin_number_afk++
-			adminholders += X
-			continue
-		if(check_rights(R_MOD, 0, X.mob))
-			modholders += X
-			continue
-		if(check_rights(R_MENTOR, 0, X.mob))
-			mentorholders += X
-			continue
-
-	switch(selected_type)
-		if("Mentorhelp")
-			msg = "<span class='mentorhelp'>[selected_type]: </span><span class='boldnotice'>[key_name(src, 1, 1, selected_type)] (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[mob.UID()]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) ([admin_jump_link(mob)]) (<A HREF='?_src_=holder;check_antagonist=1'>CA</A>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) [ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]  (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=holder;take_question=[mob.UID()];is_mhelp=1'>TAKE</A>) :</span> <span class='mentorhelp'>[msg]</span>"
-			for(var/client/X in mentorholders + modholders + adminholders)
-				if(X.prefs.sound & SOUND_ADMINHELP)
-					X << 'sound/effects/adminhelp.ogg'
+			if(X.is_preference_enabled(/datum/client_preference/holder/play_adminhelp_ping))
+				sound_to(X, 'sound/effects/adminhelp.ogg')
+			if(X.holder.rights == R_MENTOR)
+				to_chat(X, mentor_msg)// Mentors won't see coloring of names on people with special_roles (Antags, etc.)
+			else
 				to_chat(X, msg)
-		if("Adminhelp")
-			msg = "<span class='adminhelp'>[selected_type]: </span><span class='boldnotice'>[key_name(src, 1, 1, selected_type)] (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[mob.UID()]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) ([admin_jump_link(mob)]) (<A HREF='?_src_=holder;check_antagonist=1'>CA</A>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) [ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""] (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=holder;take_question=[mob.UID()]'>TAKE</A>) :</span> <span class='adminhelp'>[msg]</span>"
-			for(var/client/X in modholders + adminholders)
-				if(X.prefs.sound & SOUND_ADMINHELP)
-					X << 'sound/effects/adminhelp.ogg'
-				window_flash(X)
-				to_chat(X, msg)
-
 	//show it to the person adminhelping too
-	to_chat(src, "<span class='boldnotice'>[selected_type]</b>: [original_msg]</span>")
-
-	var/admin_number_present = adminholders.len - admin_number_afk
-	log_admin("[selected_type]: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
+	to_chat(src, "<font color='blue'>PM to-<b>Staff </b>: [original_msg]</font>")
+	var/admin_number_present = admins.len - admin_number_afk
+	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
 	if(admin_number_present <= 0)
-		if(!admin_number_afk)
-			send2adminirc("[selected_type] from [key_name(src)]: [original_msg] - !!No admins online!!")
-		else
-			send2adminirc("[selected_type] from [key_name(src)]: [original_msg] - !!All admins AFK ([admin_number_afk])!!")
+		adminmsg2adminirc(src, null, "[html_decode(original_msg)] - !![admin_number_afk ? "All admins AFK ([admin_number_afk])" : "No admins online"]!!")
 	else
-		send2adminirc("[selected_type] from [key_name(src)]: [original_msg]")
+		adminmsg2adminirc(src, null, "[html_decode(original_msg)]")
+	admin_pm_repository.store_pm(src, null, original_msg)
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
-	var/admin_number_total = 0		//Total number of admins
-	var/admin_number_afk = 0		//Holds the number of admins who are afk
-	var/admin_number_ignored = 0	//Holds the number of admins without +BAN (so admins who are not really admins)
-	var/admin_number_decrease = 0	//Holds the number of admins with are afk, ignored or both
-	for(var/client/X in admins)
-		admin_number_total++;
-		var/invalid = 0
-		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
-			admin_number_ignored++
-			invalid = 1
-		if(X.is_afk())
-			admin_number_afk++
-			invalid = 1
-		if(X.holder.fakekey)
-			admin_number_ignored++
-			invalid = 1
-		if(invalid)
-			admin_number_decrease++
-	var/admin_number_present = admin_number_total - admin_number_decrease	//Number of admins who are neither afk nor invalid
-	if(admin_number_present <= 0)
-		if(!admin_number_afk && !admin_number_ignored)
-			send2irc(source, "[msg] - No admins online")
-		else
-			send2irc(source, "[msg] - All admins AFK ([admin_number_afk]/[admin_number_total]) or skipped ([admin_number_ignored]/[admin_number_total])")
-	return admin_number_present

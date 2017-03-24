@@ -1,88 +1,162 @@
 /obj/item/weapon/implanter
 	name = "implanter"
-	desc = "A sterile automatic implant injector."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implanter0"
 	item_state = "syringe_0"
-	throw_speed = 3
+	throw_speed = 1
 	throw_range = 5
-	w_class = 2
-	origin_tech = "materials=1;biotech=3;programming=2"
-	materials = list(MAT_METAL=600, MAT_GLASS=200)
+	w_class = ITEM_SIZE_SMALL
 	var/obj/item/weapon/implant/imp = null
 
-
-/obj/item/weapon/implanter/update_icon()
-	if(imp)
-		icon_state = "implanter1"
-		origin_tech = imp.origin_tech
+/obj/item/weapon/implanter/proc/update()
+	if (src.imp)
+		src.icon_state = "implanter1"
 	else
-		icon_state = "implanter0"
-		origin_tech = initial(origin_tech)
+		src.icon_state = "implanter0"
+	return
 
+/obj/item/weapon/implanter/verb/remove_implant()
+	set category = "Object"
+	set name = "Remove implant"
+	set src in usr
 
-/obj/item/weapon/implanter/attack(mob/living/carbon/M, mob/user)
-	if(!iscarbon(M))
+	if(issilicon(usr))
 		return
-	if(user && imp)
-		if(M != user)
-			M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
 
-		var/turf/T = get_turf(M)
-		if(T && (M == user || do_after(user, 50, target = M)))
-			if(user && M && (get_turf(M) == T) && src && imp)
-				if(imp.implant(M, user))
-					if(M == user)
-						to_chat(user, "<span class='notice'>You implant yourself.</span>")
-					else
-						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
-					imp = null
-					update_icon()
-
-/obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
-	..()
-	if(istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_hand() != W)
+	if(can_use(usr))
+		if(!imp)
+			to_chat(usr, "<span class='notice'>There is no implant to remove.</span>")
 			return
-		if(!in_range(src, user) && loc != user)
-			return
-		if(t)
-			name = "implanter ([t])"
-		else
-			name = "implanter"
+		imp.forceMove(get_turf(src))
+		usr.put_in_hands(imp)
+		to_chat(usr, "<span class='notice'>You remove \the [imp] from \the [src].</span>")
+		name = "implanter"
+		imp = null
+		update()
+		return
+	else
+		to_chat(usr, "<span class='notice'>You cannot do this in your current condition.</span>")
 
-/obj/item/weapon/implanter/New()
+/obj/item/weapon/implanter/proc/can_use()
+
+	if(!ismob(loc))
+		return 0
+
+	var/mob/M = loc
+
+	if(M.incapacitated())
+		return 0
+	if((src in M.contents) || (istype(loc, /turf) && in_range(src, M)))
+		return 1
+	return 0
+
+/obj/item/weapon/implanter/attack(mob/M as mob, mob/user as mob)
+	if (!istype(M, /mob/living/carbon))
+		return
+	if (user && src.imp)
+		M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
+
+		user.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
+		user.do_attack_animation(M)
+
+		var/target_zone = user.zone_sel.selecting
+		if(src.imp.can_implant(M, user, target_zone))
+			if(do_after(user, 50, M) && src.imp.implant_in_mob(M, target_zone))
+				M.visible_message("<span class='warning'>[M] has been implanted by [user].</span>")
+				admin_attack_log(user, M, "Implanted using \the [src.name] ([src.imp.name])", "Implanted with \the [src.name] ([src.imp.name])", "used an implanter, [src.name] ([src.imp.name]), on")
+
+				src.imp = null
+				update()
+
+	return
+
+/obj/item/weapon/implanter/loyalty
+	name = "implanter-loyalty"
+
+/obj/item/weapon/implanter/loyalty/New()
+	src.imp = new /obj/item/weapon/implant/loyalty( src )
 	..()
-	spawn(1)
-		update_icon()
+	update()
+	return
 
+/obj/item/weapon/implanter/explosive
+	name = "implanter (E)"
+
+/obj/item/weapon/implanter/explosive/New()
+	src.imp = new /obj/item/weapon/implant/explosive( src )
+	..()
+	update()
+	return
 
 /obj/item/weapon/implanter/adrenalin
-	name = "implanter (adrenalin)"
+	name = "implanter-adrenalin"
 
 /obj/item/weapon/implanter/adrenalin/New()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
+	src.imp = new /obj/item/weapon/implant/adrenalin(src)
+	..()
+	update()
+	return
+
+/obj/item/weapon/implanter/compressed
+	name = "implanter (C)"
+	icon_state = "cimplanter1"
+	desc = "The matter compressor safety is on."
+	var/safe = 1
+
+/obj/item/weapon/implanter/compressed/New()
+	imp = new /obj/item/weapon/implant/compressed( src )
+	..()
+	update()
+	return
+
+/obj/item/weapon/implanter/compressed/update()
+	if (imp)
+		var/obj/item/weapon/implant/compressed/c = imp
+		if(!c.scanned)
+			icon_state = "cimplanter1"
+		else
+			icon_state = "cimplanter2"
+	else
+		icon_state = "cimplanter0"
+	return
+
+/obj/item/weapon/implanter/compressed/attack(mob/M as mob, mob/user as mob)
+	var/obj/item/weapon/implant/compressed/c = imp
+	if (!c)	return
+	if (c.scanned == null)
+		to_chat(user, "Please compress an object with the implanter first.")
+		return
 	..()
 
+/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob, proximity)
+	if(!proximity)
+		return
+	if(istype(A,/obj/item) && imp)
+		var/obj/item/weapon/implant/compressed/c = imp
+		if (c.scanned)
+			if (!istype(A,/obj/item/weapon/storage))
+				to_chat(user, "<span class='warning'>Something is already compressed inside the implant!</span>")
+			return
+		else if(safe)
+			if (!istype(A,/obj/item/weapon/storage))
+				to_chat(user, "<span class='warning'>The matter compressor safeties prevent you from doing that.</span>")
+			return
+		c.scanned = A
+		if(istype(A.loc,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = A.loc
+			H.remove_from_mob(A)
+		else if(istype(A.loc,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = A.loc
+			S.remove_from_storage(A)
+		A.loc.contents.Remove(A)
+		safe = 2
+		desc = "It currently contains some matter."
+		update()
 
-/obj/item/weapon/implanter/emp
-	name = "implanter (EMP)"
+/obj/item/weapon/implanter/compressed/attack_self(var/mob/user)
+	if(!imp || safe == 2)
+		return ..()
 
-/obj/item/weapon/implanter/emp/New()
-	imp = new /obj/item/weapon/implant/emp(src)
-	..()
-
-/obj/item/weapon/implanter/traitor
-	name = "implanter (Mindslave)"
-
-/obj/item/weapon/implanter/traitor/New()
-	imp = new /obj/item/weapon/implant/traitor(src)
-	..()
-
-/obj/item/weapon/implanter/death_alarm
-	name = "implanter (Death Alarm)"
-
-/obj/item/weapon/implanter/death_alarm/New()
-	imp = new /obj/item/weapon/implant/death_alarm(src)
-	..()
+	safe = !safe
+	to_chat(user, "<span class='notice'>You [safe ? "enable" : "disable"] the matter compressor safety.</span>")
+	src.desc = "The matter compressor safety is [safe ? "on" : "off"]."

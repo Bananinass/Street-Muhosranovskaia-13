@@ -50,13 +50,13 @@ var/total_runtimes_skipped = 0
 	var/locinfo
 	// First, try to make better src/usr info lines
 	if(istype(e_src))
-		srcinfo = list("  src: [datum_info_line(e_src)]")
-		locinfo = atom_loc_line(e_src)
+		srcinfo = list("  src: [log_info_line(e_src)]")
+		locinfo = log_info_line(e_src)
 		if(locinfo)
 			srcinfo += "  src.loc: [locinfo]"
 	if(istype(usr))
-		usrinfo = list("  usr: [datum_info_line(usr)]")
-		locinfo = atom_loc_line(usr)
+		usrinfo = list("  usr: [log_info_line(usr)]")
+		locinfo = log_info_line(usr.loc)
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
 	// The proceeding mess will almost definitely break if error messages are ever changed

@@ -11,7 +11,8 @@
 	name = "Electromagnetic Generator"
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
-	layer = 2.5
+	plane = ABOVE_PLATING_PLANE
+	layer = ABOVE_WIRE_LAYER
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 50
@@ -32,7 +33,7 @@
 	New()
 		..()
 		var/turf/T = loc
-		hide(T.intact)
+		hide(!T.is_plating())
 		center = T
 
 		spawn(10)	// must wait for map loading to finish
@@ -190,8 +191,10 @@
 
 		pulling = 0
 
-
-
+/obj/machinery/magnetic_module/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, freq)
+	..()
 
 /obj/machinery/magnetic_controller
 	name = "Magnetic Control Console"
@@ -253,9 +256,9 @@
 		var/dat = "<B>Magnetic Control Console</B><BR><BR>"
 		if(!autolink)
 			dat += {"
-			Frequency: <a href='?src=[UID()];operation=setfreq'>[frequency]</a><br>
-			Code: <a href='?src=[UID()];operation=setfreq'>[code]</a><br>
-			<a href='?src=[UID()];operation=probe'>Probe Generators</a><br>
+			Frequency: <a href='?src=\ref[src];operation=setfreq'>[frequency]</a><br>
+			Code: <a href='?src=\ref[src];operation=setfreq'>[code]</a><br>
+			<a href='?src=\ref[src];operation=probe'>Probe Generators</a><br>
 			"}
 
 		if(magnets.len >= 1)
@@ -264,11 +267,11 @@
 			var/i = 0
 			for(var/obj/machinery/magnetic_module/M in magnets)
 				i++
-				dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;< \[[i]\] (<a href='?src=[UID()];radio-op=togglepower'>[M.on ? "On":"Off"]</a>) | Electricity level: <a href='?src=[UID()];radio-op=minuselec'>-</a> [M.electricity_level] <a href='?src=[UID()];radio-op=pluselec'>+</a>; Magnetic field: <a href='?src=[UID()];radio-op=minusmag'>-</a> [M.magnetic_field] <a href='?src=[UID()];radio-op=plusmag'>+</a><br>"
+				dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;< \[[i]\] (<a href='?src=\ref[src];radio-op=togglepower'>[M.on ? "On":"Off"]</a>) | Electricity level: <a href='?src=\ref[src];radio-op=minuselec'>-</a> [M.electricity_level] <a href='?src=\ref[src];radio-op=pluselec'>+</a>; Magnetic field: <a href='?src=\ref[src];radio-op=minusmag'>-</a> [M.magnetic_field] <a href='?src=\ref[src];radio-op=plusmag'>+</a><br>"
 
-		dat += "<br>Speed: <a href='?src=[UID()];operation=minusspeed'>-</a> [speed] <a href='?src=[UID()];operation=plusspeed'>+</a><br>"
-		dat += "Path: {<a href='?src=[UID()];operation=setpath'>[path]</a>}<br>"
-		dat += "Moving: <a href='?src=[UID()];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
+		dat += "<br>Speed: <a href='?src=\ref[src];operation=minusspeed'>-</a> [speed] <a href='?src=\ref[src];operation=plusspeed'>+</a><br>"
+		dat += "Path: {<a href='?src=\ref[src];operation=setpath'>[path]</a>}<br>"
+		dat += "Moving: <a href='?src=\ref[src];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
 
 
 		user << browse(dat, "window=magnet;size=400x500")
@@ -315,7 +318,7 @@
 		if(href_list["operation"])
 			switch(href_list["operation"])
 				if("plusspeed")
-					speed++
+					speed ++
 					if(speed > 10)
 						speed = 10
 				if("minusspeed")
@@ -323,7 +326,7 @@
 					if(speed <= 0)
 						speed = 1
 				if("setpath")
-					var/newpath = sanitize(copytext(input(usr, "Please define a new path!",,path) as text|null,1,MAX_MESSAGE_LEN))
+					var/newpath = sanitize(input(usr, "Please define a new path!",,path) as text|null)
 					if(newpath && newpath != "")
 						moving = 0 // stop moving
 						path = newpath
@@ -399,25 +402,7 @@
 
 			// there doesn't HAVE to be separators but it makes paths syntatically visible
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/obj/machinery/magnetic_controller/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()

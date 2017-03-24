@@ -1,8 +1,8 @@
 proc/sql_report_karma(var/mob/spender, var/mob/receiver)
 	var/sqlspendername = sanitizeSQL(spender.name)
-	var/sqlspenderkey = spender.key
+	var/sqlspenderkey = spender.ckey
 	var/sqlreceivername = sanitizeSQL(receiver.name)
-	var/sqlreceiverkey = receiver.key
+	var/sqlreceiverkey = receiver.ckey
 	var/sqlreceiverrole = "None"
 	var/sqlreceiverspecial = "None"
 
@@ -24,7 +24,7 @@ proc/sql_report_karma(var/mob/spender, var/mob/receiver)
 			log_game("SQL ERROR during karma logging. Error : \[[err]\]\n")
 
 
-		query = dbcon.NewQuery("SELECT * FROM [format_table_name("karmatotals")] WHERE byondkey='[receiver.key]'")
+		query = dbcon.NewQuery("SELECT * FROM [format_table_name("karmatotals")] WHERE byondkey='[receiver.ckey]'")
 		query.Execute()
 
 		var/karma
@@ -34,7 +34,7 @@ proc/sql_report_karma(var/mob/spender, var/mob/receiver)
 			karma = text2num(query.item[3])
 		if(karma == null)
 			karma = 1
-			query = dbcon.NewQuery("INSERT INTO [format_table_name("karmatotals")] (byondkey, karma) VALUES ('[receiver.key]', [karma])")
+			query = dbcon.NewQuery("INSERT INTO [format_table_name("karmatotals")] (byondkey, karma) VALUES ('[receiver.ckey]', [karma])")
 			if(!query.Execute())
 				var/err = query.ErrorMsg()
 				log_game("SQL ERROR during karmatotal logging (adding new key). Error : \[[err]\]\n")
@@ -55,7 +55,7 @@ var/list/karma_spenders = list()
 	if(!ticker || !player_list.len || (ticker.current_state == GAME_STATE_PREGAME))
 		to_chat(src, "<span class='warning'>You can't award karma until the game has started.</span>")
 		return 0
-	if(client.karma_spent || (key in karma_spenders))
+	if(client.karma_spent || (ckey in karma_spenders))
 		to_chat(src, "<span class='warning'>You've already spent your karma for the round.</span>")
 		return 0
 	return 1
@@ -70,7 +70,7 @@ var/list/karma_spenders = list()
 	if(!M.client)
 		to_chat(src, "<span class='warning'>That mob has no client connected at the moment.</span>")
 		return 0
-	if(key == M.key)
+	if(ckey == M.ckey)
 		to_chat(src, "<span class='warning'>You can't spend karma on yourself!</span>")
 		return 0
 	if(client.address == M.client.address)
@@ -79,7 +79,7 @@ var/list/karma_spenders = list()
 		to_chat(src, "<span class='warning'>You can't spend karma on someone connected from the same IP.</span>")
 		return 0
 	return 1
-	
+
 
 /mob/verb/spend_karma_list()
 	set name = "Award Karma"
@@ -128,7 +128,7 @@ var/list/karma_spenders = list()
 	M.client.karma += 1
 	to_chat(usr, "Good karma spent on [M.name].")
 	client.karma_spent = 1
-	karma_spenders += key
+	karma_spenders += ckey
 
 	var/special_role = "None"
 	var/assigned_role = "None"
@@ -143,21 +143,21 @@ var/list/karma_spenders = list()
 	sql_report_karma(src, M)
 
 /client/verb/check_karma()
-	set name = "Check Karma"
+	set name = "Check_Karma"
 	set desc = "Reports how much karma you have accrued."
 	set category = "OOC"
 
 	var/currentkarma=verify_karma()
-	to_chat(usr, {"<br>You have <b>[currentkarma]</b> available."})
+	to_chat(usr, "<br>You have <b>[currentkarma]</b> available.")
 	return
 
 /client/proc/verify_karma()
-	var/currentkarma=0
+	var/currentkarma = 0
 	if(!dbcon.IsConnected())
 		to_chat(usr, "\red Unable to connect to karma database. Please try again later.<br>")
 		return
 	else
-		var/DBQuery/query = dbcon.NewQuery("SELECT karma, karmaspent FROM [format_table_name("karmatotals")] WHERE byondkey='[src.key]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT karma, karmaspent FROM [format_table_name("karmatotals")] WHERE byondkey='[src.ckey]'")
 		query.Execute()
 
 		var/totalkarma
@@ -183,33 +183,33 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 
 /client/proc/karmashopmenu()
 	var/dat = "<html><body><center>"
-	dat += "<a href='?src=[UID()];karmashop=tab;tab=0' [karma_tab == 0 ? "class='linkOn'" : ""]>Job Unlocks</a>"
-	dat += "<a href='?src=[UID()];karmashop=tab;tab=1' [karma_tab == 1 ? "class='linkOn'" : ""]>Species Unlocks</a>"
-	dat += "<a href='?src=[UID()];karmashop=tab;tab=2' [karma_tab == 2 ? "class='linkOn'" : ""]>Karma Refunds</a>"
+	dat += "<a href='?src=\ref[src];karmashop=tab;tab=0' [karma_tab == 0 ? "class='linkOn'" : ""]>Job Unlocks</a>"
+	dat += "<a href='?src=\ref[src];karmashop=tab;tab=1' [karma_tab == 1 ? "class='linkOn'" : ""]>Species Unlocks</a>"
+	dat += "<a href='?src=\ref[src];karmashop=tab;tab=2' [karma_tab == 2 ? "class='linkOn'" : ""]>Karma Refunds</a>"
 	dat += "</center>"
 	dat += "<HR>"
 
 	switch(karma_tab)
 		if(0) // Job Unlocks
 			dat += {"
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy=1'>Unlock Barber -- 5KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy=2'>Unlock Brig Physician -- 5KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy=3'>Unlock Nanotrasen Representative -- 30KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy=5'>Unlock Blueshield -- 30KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy=9'>Unlock Security Pod Pilot -- 30KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy=6'>Unlock Mechanic -- 30KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy=7'>Unlock Magistrate -- 45KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy=1'>Unlock Barber -- 5KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy=2'>Unlock Brig Physician -- 5KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy=3'>Unlock Nanotrasen Representative -- 30KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy=5'>Unlock Blueshield -- 30KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy=9'>Unlock Security Pod Pilot -- 30KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy=6'>Unlock Mechanic -- 30KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy=7'>Unlock Magistrate -- 45KP</a><br>
 			"}
 
 		if(1) // Species Unlocks
 			dat += {"
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy2=1'>Unlock Machine People -- 15KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy2=2'>Unlock Kidan -- 30KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy2=3'>Unlock Grey -- 30KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy2=7'>Unlock Drask -- 30KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy2=4'>Unlock Vox -- 45KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy2=5'>Unlock Slime People -- 45KP</a><br>
-			<a href='?src=[UID()];karmashop=shop;KarmaBuy2=6'>Unlock Plasmaman -- 100KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy2=1'>Unlock Machine People -- 15KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy2=2'>Unlock Kidan -- 30KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy2=3'>Unlock Grey -- 30KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy2=7'>Unlock Drask -- 30KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy2=4'>Unlock Vox -- 45KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy2=5'>Unlock Slime People -- 45KP</a><br>
+			<a href='?src=\ref[src];karmashop=shop;KarmaBuy2=6'>Unlock Plasmaman -- 100KP</a><br>
 			"}
 
 		if(2) // Karma Refunds
@@ -217,34 +217,34 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 			var/list/purchased = checkpurchased()
 			if("Tajaran Ambassador" in purchased)
 				refundable += "Tajaran Ambassador"
-				dat += "<a href='?src=[UID()];karmashop=shop;KarmaRefund=Tajaran Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Tajaran Ambassador -- 30KP</a><br>"
+				dat += "<a href='?src=\ref[src];karmashop=shop;KarmaRefund=Tajaran Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Tajaran Ambassador -- 30KP</a><br>"
 			if("Unathi Ambassador" in purchased)
 				refundable += "Unathi Ambassador"
-				dat += "<a href='?src=[UID()];karmashop=shop;KarmaRefund=Unathi Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Unathi Ambassador -- 30KP</a><br>"
+				dat += "<a href='?src=\ref[src];karmashop=shop;KarmaRefund=Unathi Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Unathi Ambassador -- 30KP</a><br>"
 			if("Skrell Ambassador" in purchased)
 				refundable += "Skrell Ambassador"
-				dat += "<a href='?src=[UID()];karmashop=shop;KarmaRefund=Skrell Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Skrell Ambassador -- 30KP</a><br>"
+				dat += "<a href='?src=\ref[src];karmashop=shop;KarmaRefund=Skrell Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Skrell Ambassador -- 30KP</a><br>"
 			if("Diona Ambassador" in purchased)
 				refundable += "Diona Ambassador"
-				dat += "<a href='?src=[UID()];karmashop=shop;KarmaRefund=Diona Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Diona Ambassador -- 30KP</a><br>"
+				dat += "<a href='?src=\ref[src];karmashop=shop;KarmaRefund=Diona Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Diona Ambassador -- 30KP</a><br>"
 			if("Kidan Ambassador" in purchased)
 				refundable += "Kidan Ambassador"
-				dat += "<a href='?src=[UID()];karmashop=shop;KarmaRefund=Kidan Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Kidan Ambassador -- 30KP</a><br>"
+				dat += "<a href='?src=\ref[src];karmashop=shop;KarmaRefund=Kidan Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Kidan Ambassador -- 30KP</a><br>"
 			if("Slime People Ambassador" in purchased)
 				refundable += "Slime People Ambassador"
-				dat += "<a href='?src=[UID()];karmashop=shop;KarmaRefund=Slime People Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Slime People Ambassador -- 30KP</a><br>"
+				dat += "<a href='?src=\ref[src];karmashop=shop;KarmaRefund=Slime People Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Slime People Ambassador -- 30KP</a><br>"
 			if("Grey Ambassador" in purchased)
 				refundable += "Grey Ambassador"
-				dat += "<a href='?src=[UID()];karmashop=shop;KarmaRefund=Grey Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Grey Ambassador -- 30KP</a><br>"
+				dat += "<a href='?src=\ref[src];karmashop=shop;KarmaRefund=Grey Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Grey Ambassador -- 30KP</a><br>"
 			if("Vox Ambassador" in purchased)
 				refundable += "Vox Ambassador"
-				dat += "<a href='?src=[UID()];karmashop=shop;KarmaRefund=Vox Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Vox Ambassador -- 30KP</a><br>"
+				dat += "<a href='?src=\ref[src];karmashop=shop;KarmaRefund=Vox Ambassador;KarmaRefundType=job;KarmaRefundCost=30'>Refund Vox Ambassador -- 30KP</a><br>"
 			if("Customs Officer" in purchased)
 				refundable += "Customs Officer"
-				dat += "<a href='?src=[UID()];karmashop=shop;KarmaRefund=Customs Officer;KarmaRefundType=job;KarmaRefundCost=30'>Refund Customs Officer -- 30KP</a><br>"
+				dat += "<a href='?src=\ref[src];karmashop=shop;KarmaRefund=Customs Officer;KarmaRefundType=job;KarmaRefundCost=30'>Refund Customs Officer -- 30KP</a><br>"
 			if("Nanotrasen Recruiter" in purchased)
 				refundable += "Nanotrasen Recruiter"
-				dat += "<a href='?src=[UID()];karmashop=shop;KarmaRefund=Nanotrasen Recruiter;KarmaRefundType=job;KarmaRefundCost=10'>Refund Nanotrasen Recruiter -- 10KP</a><br>"
+				dat += "<a href='?src=\ref[src];karmashop=shop;KarmaRefund=Nanotrasen Recruiter;KarmaRefundType=job;KarmaRefundCost=10'>Refund Nanotrasen Recruiter -- 10KP</a><br>"
 
 			if(!refundable.len)
 				dat += "You do not have any refundable karma purchases.<br>"
@@ -258,7 +258,7 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 	return
 
 /client/proc/DB_job_unlock(var/job,var/cost)
-	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("whitelist")] WHERE ckey='[usr.key]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("whitelist")] WHERE ckey='[usr.ckey]'")
 	query.Execute()
 
 	var/dbjob
@@ -267,7 +267,7 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 		dbckey = query.item[2]
 		dbjob = query.item[3]
 	if(!dbckey)
-		query = dbcon.NewQuery("INSERT INTO [format_table_name("whitelist")] (ckey, job) VALUES ('[usr.key]','[job]')")
+		query = dbcon.NewQuery("INSERT INTO [format_table_name("whitelist")] (ckey, job) VALUES ('[usr.ckey]','[job]')")
 		if(!query.Execute())
 			var/err = query.ErrorMsg()
 			log_game("SQL ERROR during whitelist logging (adding new key). Error: \[[err]\]\n")
@@ -298,7 +298,7 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 			return
 
 /client/proc/DB_species_unlock(var/species,var/cost)
-	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("whitelist")] WHERE ckey='[usr.key]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("whitelist")] WHERE ckey='[usr.ckey]'")
 	query.Execute()
 
 	var/dbspecies
@@ -307,7 +307,7 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 		dbckey = query.item[2]
 		dbspecies = query.item[4]
 	if(!dbckey)
-		query = dbcon.NewQuery("INSERT INTO [format_table_name("whitelist")] (ckey, species) VALUES ('[usr.key]','[species]')")
+		query = dbcon.NewQuery("INSERT INTO [format_table_name("whitelist")] (ckey, species) VALUES ('[usr.ckey]','[species]')")
 		if(!query.Execute())
 			var/err = query.ErrorMsg()
 			log_game("SQL ERROR during whitelist logging (adding new key). Error : \[[err]\]\n")
@@ -338,7 +338,7 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 			return
 
 /client/proc/karmacharge(var/cost,var/refund = 0)
-	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("karmatotals")] WHERE byondkey='[usr.key]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("karmatotals")] WHERE byondkey='[usr.ckey]'")
 	query.Execute()
 
 	while(query.NextRow())
@@ -347,7 +347,7 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 			spent -= cost
 		else
 			spent += cost
-		query = dbcon.NewQuery("UPDATE [format_table_name("karmatotals")] SET karmaspent=[spent] WHERE byondkey='[usr.key]'")
+		query = dbcon.NewQuery("UPDATE [format_table_name("karmatotals")] SET karmaspent=[spent] WHERE byondkey='[usr.ckey]'")
 		if(!query.Execute())
 			var/err = query.ErrorMsg()
 			log_game("SQL ERROR during karmaspent updating (updating existing entry). Error: \[[err]\]\n")
@@ -383,7 +383,7 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 		to_chat(usr, "\red That job is not refundable.")
 		return
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("whitelist")] WHERE ckey='[usr.key]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("whitelist")] WHERE ckey='[usr.ckey]'")
 	query.Execute()
 
 	var/dbjob
@@ -423,7 +423,7 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 		to_chat(usr, "\red Your ckey ([dbckey]) was not found.")
 
 /client/proc/checkpurchased(var/name = null) // If the first parameter is null, return a full list of purchases
-	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("whitelist")] WHERE ckey='[usr.key]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("whitelist")] WHERE ckey='[usr.ckey]'")
 	query.Execute()
 
 	var/dbjob

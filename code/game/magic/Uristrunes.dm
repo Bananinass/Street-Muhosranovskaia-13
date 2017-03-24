@@ -1,39 +1,78 @@
-/proc/get_rune_cult(word)
+
+var/list/word_to_uristrune_table = null
+
+/proc/word_to_uristrune_bit(word)
+	if(word_to_uristrune_table == null)
+		word_to_uristrune_table = list()
+
+		var/bit = 1
+		var/list/words = list("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "mgar", "balaq", "karazet", "geeri")
+
+		while(length(words))
+			var/w = pick(words)
+
+			word_to_uristrune_table[w] = bit
+
+			words -= w
+			bit <<= 1
+
+	return word_to_uristrune_table[word]
+
+
+
+/proc/get_uristrune_cult(word1, word2, word3)
 	var/animated
 
-	if(word && !(ticker.mode.cultdat.theme == "fire"))
+	if((word1 == cultwords["travel"] && word2 == cultwords["self"])						\
+	|| (word1 == cultwords["join"] && word2 == cultwords["blood"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["hell"] && word2 == cultwords["join"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["see"] && word2 == cultwords["blood"] && word3 == cultwords["hell"])	\
+	|| (word1 == cultwords["destroy"] && word2 == cultwords["see"] && word3 == cultwords["technology"])	\
+	|| (word1 == cultwords["travel"] && word2 == cultwords["blood"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["see"] && word2 == cultwords["hell"] && word3 == cultwords["join"])		\
+	|| (word1 == cultwords["blood"] && word2 == cultwords["join"] && word3 == cultwords["hell"])	\
+	|| (word1 == cultwords["hide"] && word2 == cultwords["see"] && word3 == cultwords["blood"])	\
+	|| (word1 == cultwords["hell"] && word2 == cultwords["travel"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["blood"] && word2 == cultwords["see"] && word3 == cultwords["travel"])	\
+	|| (word1 == cultwords["hell"] && word2 == cultwords["technology"] && word3 == cultwords["join"])	\
+	|| (word1 == cultwords["hell"] && word2 == cultwords["blood"] && word3 == cultwords["join"])	\
+	|| (word1 == cultwords["blood"] && word2 == cultwords["see"] && word3 == cultwords["hide"])	\
+	|| (word1 == cultwords["destroy"] && word2 == cultwords["travel"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["travel"] && word2 == cultwords["technology"] && word3 == cultwords["other"])	\
+	|| (word1 == cultwords["join"] && word2 == cultwords["other"] && word3 == cultwords["self"])	\
+	|| (word1 == cultwords["hide"] && word2 == cultwords["other"] && word3 == cultwords["see"])	\
+	|| (word1 == cultwords["destroy"] && word2 == cultwords["see"] && word3 == cultwords["other"])	\
+	|| (word1 == cultwords["destroy"] && word2 == cultwords["see"] && word3 == cultwords["blood"])	\
+	|| (word1 == cultwords["self"] && word2 == cultwords["other"] && word3 == cultwords["technology"])	\
+	|| (word1 == cultwords["travel"] && word2 == cultwords["other"])						\
+	|| (word1 == cultwords["join"] && word2 == cultwords["hide"] && word3 == cultwords["technology"])	)
 		animated = 1
 	else
 		animated = 0
 
-	var/bits = make_bit_triplet()
+	var/bits = word_to_uristrune_bit(word1) \
+			 | word_to_uristrune_bit(word2) \
+			 | word_to_uristrune_bit(word3)
 
-	return get_rune(bits, animated)
+	return get_uristrune(bits, animated)
 
 
-var/list/rune_cache = list()
-var/runetype = "rune"
+var/list/uristrune_cache = list()
 
-/proc/get_rune(symbol_bits, animated = 0)
+/proc/get_uristrune(symbol_bits, animated = 0)
 	var/lookup = "[symbol_bits]-[animated]"
 
+	if(lookup in uristrune_cache)
+		return uristrune_cache[lookup]
 
-	if(!ticker.mode)//work around for maps with runes and cultdat is not loaded all the way
-		runetype = "rune"
-	else if(ticker.mode.cultdat.theme == "fire")
-		runetype = "fire-rune"
-
-	if(lookup in rune_cache)
-		return rune_cache[lookup]
-
-	var/icon/I = icon('icons/effects/uristrunes.dmi', "[runetype]-179")
+	var/icon/I = icon('icons/effects/uristrunes.dmi', "blank")
 
 	for(var/i = 0, i < 10, i++)
-		if(symbol_bits & (1 << i))
-			I.Blend(icon('icons/effects/uristrunes.dmi', "[runetype]-[1 << i]"), ICON_OVERLAY)
+		if(BITTEST(symbol_bits, i))
+			I.Blend(icon('icons/effects/uristrunes.dmi', "rune-[1 << i]"), ICON_OVERLAY)
 
 
-	I.SwapColor(rgb(0, 0, 0, 100), rgb(100, 0, 0, 200))//TO DO COMMENT:NEED TO ADJUST FOR DIFFRNET CULTS
+	I.SwapColor(rgb(0, 0, 0, 100), rgb(100, 0, 0, 200))
 	I.SwapColor(rgb(0, 0, 0, 50), rgb(150, 0, 0, 200))
 
 	for(var/x = 1, x <= 32, x++)
@@ -87,6 +126,6 @@ var/runetype = "rune"
 		result.Insert(I3, "", frame = 7, delay = 2)
 		result.Insert(I2, "", frame = 8, delay = 2)
 
-	rune_cache[lookup] = result
+	uristrune_cache[lookup] = result
 
 	return result

@@ -36,8 +36,9 @@
 	interface_desc = "A self-sustaining plasma arc capable of cutting through walls."
 	suit_overlay_active = "plasmacutter"
 	suit_overlay_inactive = "plasmacutter"
+	use_power_cost = 50
 
-	device_type = /obj/item/weapon/gun/energy/plasmacutter
+	device_type = /obj/item/weapon/pickaxe/plasmacutter
 
 /obj/item/rig_module/device/healthscanner
 	name = "health scanner module"
@@ -45,6 +46,7 @@
 	icon_state = "scanner"
 	interface_name = "health scanner"
 	interface_desc = "Shows an informative health readout when used on a subject."
+	use_power_cost = 200
 
 	device_type = /obj/item/device/healthanalyzer
 
@@ -56,6 +58,7 @@
 	interface_desc = "A diamond-tipped industrial drill."
 	suit_overlay_active = "mounted-drill"
 	suit_overlay_inactive = "mounted-drill"
+	use_power_cost = 75
 
 	device_type = /obj/item/weapon/pickaxe/diamonddrill
 
@@ -66,6 +69,7 @@
 	interface_name = "Alden-Saraspova counter"
 	interface_desc = "An exotic particle detector commonly used by xenoarchaeologists."
 	engage_string = "Begin Scan"
+	use_power_cost = 200
 	usable = 1
 	selectable = 0
 	device_type = /obj/item/device/ano_scanner
@@ -79,8 +83,9 @@
 	engage_string = "Begin Scan"
 	usable = 1
 	selectable = 0
-	device_type = /obj/item/device/mining_scanner
-/*
+	use_power_cost = 200
+	device_type = /obj/item/weapon/mining_scanner
+
 /obj/item/rig_module/device/rcd
 	name = "RCD mount"
 	desc = "A cell-powered rapid construction device for a hardsuit."
@@ -89,14 +94,13 @@
 	interface_desc = "A device for building or removing walls. Cell-powered."
 	usable = 1
 	engage_string = "Configure RCD"
+	use_power_cost = 100 KILOWATTS // Matter fabrication is a very energy-demanding process.
 
 	device_type = /obj/item/weapon/rcd/mounted
-*/
+
 /obj/item/rig_module/device/New()
 	..()
-	if(device_type)
-		device = new device_type(src)
-		device.flags |= ABSTRACT //Abstract in the sense that it's not an item that stands alone, but rather is just there to let the module act like it.
+	if(device_type) device = new device_type(src)
 
 /obj/item/rig_module/device/engage(atom/target)
 	if(!..() || !device)
@@ -125,6 +129,7 @@
 	selectable = 0
 	toggleable = 0
 	disruptive = 0
+	use_power_cost = 500
 
 	engage_string = "Inject"
 
@@ -132,14 +137,14 @@
 	interface_desc = "Dispenses loaded chemicals directly into the wearer's bloodstream."
 
 	charges = list(
-		list("saline-glucose",   "salglu_solution", 0, 80),
-		list("salicylic acid",   "sal_acid",        0, 80),
-		list("salbutamol",       "salbutamol",      0, 80),
-		list("antibiotics",      "spaceacillin",    0, 80),
-		list("charcoal",         "charcoal",        0, 80),
-		list("nutrients",        "nutriment",       0, 80),
-		list("potasssium iodide","potass_iodide",   0, 80),
-		list("radium",           "radium",          0, 80)
+		list("tricordrazine", "tricordrazine", 0, 80),
+		list("tramadol",      "tramadol",      0, 80),
+		list("dexalin plus",  "dexalinp",      0, 80),
+		list("antibiotics",   "spaceacillin",  0, 80),
+		list("antitoxins",    "anti_toxin",    0, 80),
+		list("nutrients",     "glucose",     0, 80),
+		list("hyronalin",     "hyronalin",     0, 80),
+		list("radium",        "radium",        0, 80)
 		)
 
 	var/max_reagent_volume = 80 //Used when refilling.
@@ -149,16 +154,15 @@
 
 	//just over a syringe worth of each. Want more? Go refill. Gives the ninja another reason to have to show their face.
 	charges = list(
-		list("saline-glucose",   "salglu_solution", 0, 20),
-		list("salicylic acid",   "sal_acid",        0, 20),
-		list("salbutamol",       "salbutamol",      0, 20),
-		list("antibiotics",      "spaceacillin",    0, 20),
-		list("charcoal",         "charcoal",        0, 20),
-		list("nutrients",        "nutriment",       0, 80),
-		list("potasssium iodide","potass_iodide",   0, 20),
-		list("radium",           "radium",          0, 20)
+		list("tricordrazine", "tricordrazine", 0, 20),
+		list("tramadol",      "tramadol",      0, 20),
+		list("dexalin plus",  "dexalinp",      0, 20),
+		list("antibiotics",   "spaceacillin",  0, 20),
+		list("antitoxins",    "anti_toxin",    0, 20),
+		list("nutrients",     "glucose",     0, 80),
+		list("hyronalin",     "hyronalin",     0, 20),
+		list("radium",        "radium",        0, 20)
 		)
-
 
 /obj/item/rig_module/chem_dispenser/accepts_item(var/obj/item/input_item, var/mob/living/user)
 
@@ -242,8 +246,9 @@
 
 	charges = list(
 		list("synaptizine",   "synaptizine",   0, 30),
-		list("hydrocodone",   "hydrocodone",   0, 30),
-		list("nutrients",     "nutriment",     0, 80),
+		list("hyperzine",     "hyperzine",     0, 30),
+		list("oxycodone",     "oxycodone",     0, 30),
+		list("nutrients",     "glucose",     0, 80),
 		)
 
 	interface_name = "combat chem dispenser"
@@ -270,6 +275,7 @@
 	selectable = 0
 	toggleable = 0
 	disruptive = 0
+	active_power_cost = 100
 
 	engage_string = "Configure Synthesiser"
 
@@ -323,6 +329,7 @@
 	toggleable = 1
 	selectable = 0
 	disruptive = 0
+	active_power_cost = 50
 
 	suit_overlay_active = "maneuvering_active"
 	suit_overlay_inactive = null //"maneuvering_inactive"
@@ -339,7 +346,7 @@
 /obj/item/rig_module/maneuvering_jets/engage()
 	if(!..())
 		return 0
-	jets.toggle_stabilization(usr)
+	jets.toggle_rockets()
 	return 1
 
 /obj/item/rig_module/maneuvering_jets/activate()
@@ -356,13 +363,15 @@
 			suit_overlay = null
 		holder.update_icon()
 
-	jets.turn_on()
+	if(!jets.on)
+		jets.toggle()
 	return 1
 
 /obj/item/rig_module/maneuvering_jets/deactivate()
 	if(!..())
 		return 0
-	jets.turn_off()
+	if(jets.on)
+		jets.toggle()
 	return 1
 
 /obj/item/rig_module/maneuvering_jets/New()
@@ -388,6 +397,7 @@
 	interface_name = "paper dispenser"
 	interface_desc = "Dispenses warm, clean, and crisp sheets of paper."
 	engage_string = "Dispense"
+	use_power_cost = 200
 	usable = 1
 	selectable = 0
 	device_type = /obj/item/weapon/paper_bin
@@ -419,15 +429,13 @@
 	interface_desc = "Leave your mark."
 	engage_string = "Toggle stamp type"
 	usable = 1
-	var/obj/iastamp			//Theese were just vars, but any device would need to be an object
-	var/obj/deniedstamp //Stops assigning non-objects to theese vars, which probably would break quite a bit.
+	var/iastamp
+	var/deniedstamp
 
 /obj/item/rig_module/device/stamp/New()
 	..()
-	iastamp = new /obj/item/weapon/stamp/law(src)
+	iastamp = new /obj/item/weapon/stamp/internalaffairs(src)
 	deniedstamp = new /obj/item/weapon/stamp/denied(src)
-	iastamp.flags |= ABSTRACT
-	deniedstamp.flags |= ABSTRACT
 	device = iastamp
 
 /obj/item/rig_module/device/stamp/engage(atom/target)
@@ -443,53 +451,11 @@
 			to_chat(holder.wearer, "<span class='notice'>Switched to internal affairs stamp.</span>")
 		return 1
 
-/obj/item/rig_module/welding_tank
-	name = "welding fuel tank"
-	desc = "A bluespace welding fuel storage tank for a rigsuit."
-	icon_state = "welding_tank"
-	interface_name = "mounted welding fuel tank"
-	interface_desc = "A minitaure fuel tank used for storage of welding fuel, built into a hardsuit."
-	engage_string = "Dispense fuel"
-	usable = 1
+/obj/item/rig_module/device/decompiler
+	name = "mounted matter decompiler"
+	desc = "A drone matter decompiler reconfigured for hardsuit use."
+	icon_state = "ewar"
+	interface_name = "mounted matter decompiler"
+	interface_desc = "Eats trash like no one's business."
 
-	var/max_fuel = 300
-
-/obj/item/rig_module/welding_tank/New()
-	..()
-
-	create_reagents(max_fuel)
-	reagents.add_reagent("fuel", max_fuel)
-
-/obj/item/rig_module/welding_tank/engage(atom/target)
-	if(!..() || !reagents)
-		return 0
-
-	if(!target)
-		if(get_fuel() >= 0)
-			var/obj/item/weapon/weldingtool/W = holder.wearer.get_active_hand()
-			if(istype(W))
-				fill_welder(W)
-			else
-				W = holder.wearer.get_inactive_hand()
-				if(istype(W))
-					fill_welder(W)
-		else
-			to_chat(holder.wearer, "<span class='danger'>Your welding tank is out of fuel!</span>")
-	else
-		to_chat(holder.wearer, "<span class='notice'>You need to have a welding tool in one of your hands to dispense fuel.</span>")
-
-/obj/item/rig_module/welding_tank/proc/fill_welder(var/obj/item/weapon/weldingtool/W)
-	if(!istype(W))
-		return 0
-
-	if(reagents)
-		if(get_fuel() >= W.max_fuel)
-			reagents.trans_to(W, W.max_fuel)
-			to_chat(holder.wearer, "<span class='notice'>Your [holder] dispenses some of the contents of the welding fuel tank into \the [W].</span>")
-		else
-			reagents.trans_to(W, W.max_fuel)
-			to_chat(holder.wearer, "<span class='notice'>You hear a faint dripping as your hardsuit welding tank completely empties.</span>")
-		W.update_icon()
-
-/obj/item/rig_module/welding_tank/proc/get_fuel()
-	return reagents.get_reagent_amount("fuel")
+	device_type = /obj/item/weapon/matter_decompiler

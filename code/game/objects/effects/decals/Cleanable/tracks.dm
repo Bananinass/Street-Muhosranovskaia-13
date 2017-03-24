@@ -24,10 +24,17 @@ var/global/list/image/fluidtrack_cache=list()
 	var/crusty=0
 	var/image/overlay
 
-	New(_direction,item_color,_wet)
+	New(_direction,_color,_wet)
 		src.direction=_direction
-		src.basecolor=item_color
+		src.basecolor=_color
 		src.wet=_wet
+
+/obj/effect/decal/cleanable/blood/tracks/reveal_blood()
+	if(!fluorescent)
+		if(stack && stack.len)
+			for(var/datum/fluidtrack/track in stack)
+				track.basecolor = COLOR_LUMINOL
+		..()
 
 // Footprints, tire trails...
 /obj/effect/decal/cleanable/blood/tracks
@@ -78,7 +85,7 @@ var/global/list/image/fluidtrack_cache=list()
 
 		// Process 4 bits
 		for(var/bi=0;bi<4;bi++)
-			b = 1 << bi
+			b=1<<bi
 			// COMING BIT
 			// If setting
 			if(comingdir&b)
@@ -114,7 +121,8 @@ var/global/list/image/fluidtrack_cache=list()
 				updated=1
 
 		dirs |= comingdir|realgoing
-		blood_DNA |= DNA.Copy()
+		if(islist(blood_DNA))
+			blood_DNA |= DNA.Copy()
 		if(updated)
 			update_icon()
 
@@ -157,8 +165,8 @@ var/global/list/image/fluidtrack_cache=list()
 	dryname = "dried tracks"
 	desc = "Whoops..."
 	drydesc = "Whoops..."
-	coming_state = "wheels1"
-	going_state  = "wheels2"
+	coming_state = "wheels"
+	going_state  = ""
 	desc = "They look like tracks left by wheels."
 	gender = PLURAL
 	random_icon_states = null

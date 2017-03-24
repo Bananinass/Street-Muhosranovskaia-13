@@ -8,21 +8,24 @@
 	icon_broken = "securecebroken"
 	icon_off = "secureceoff"
 
+
 	New()
 		..()
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/industrial(src)
 		else
 			new /obj/item/weapon/storage/backpack/satchel_eng(src)
-		new /obj/item/weapon/storage/backpack/duffel/engineering(src)
-		new /obj/item/clothing/head/beret/ce(src)
-		new /obj/item/areaeditor/blueprints(src)
-		new /obj/item/weapon/storage/box/permits(src)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/dufflebag/eng(src)
+		if (prob(70))
+			new /obj/item/clothing/accessory/storage/brown_vest(src)
+		else
+			new /obj/item/clothing/accessory/storage/webbing(src)
+		new /obj/item/blueprints(src)
 		new /obj/item/clothing/under/rank/chief_engineer(src)
-		new /obj/item/clothing/under/rank/chief_engineer/skirt(src)
 		new /obj/item/clothing/head/hardhat/white(src)
-		new /obj/item/clothing/glasses/welding/superior(src)
-		new /obj/item/clothing/gloves/color/yellow(src)
+		new /obj/item/clothing/head/welding(src)
+		new /obj/item/clothing/gloves/insulated(src)
 		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/weapon/cartridge/ce(src)
 		new /obj/item/device/radio/headset/heads/ce(src)
@@ -32,11 +35,10 @@
 		new /obj/item/device/multitool(src)
 		new /obj/item/device/flash(src)
 		new /obj/item/taperoll/engineering(src)
-		new /obj/item/clothing/head/beret/eng(src)
-		new /obj/item/weapon/door_remote/chief_engineer(src)
+		new /obj/item/weapon/crowbar/brace_jack(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
-	name = "electrical supplies locker"
+	name = "electrical supplies"
 	req_access = list(access_engine_equip)
 	icon_state = "secureengelec1"
 	icon_closed = "secureengelec"
@@ -48,24 +50,25 @@
 
 	New()
 		..()
-		new /obj/item/clothing/gloves/color/yellow(src)
-		new /obj/item/clothing/gloves/color/yellow(src)
+		new /obj/item/clothing/gloves/insulated(src)
+		new /obj/item/clothing/gloves/insulated(src)
+		new /obj/item/clothing/gloves/insulated(src)
 		new /obj/item/weapon/storage/toolbox/electrical(src)
 		new /obj/item/weapon/storage/toolbox/electrical(src)
 		new /obj/item/weapon/storage/toolbox/electrical(src)
-		new /obj/item/weapon/apc_electronics(src)
-		new /obj/item/weapon/apc_electronics(src)
-		new /obj/item/weapon/apc_electronics(src)
+		new /obj/item/weapon/module/power_control(src)
+		new /obj/item/weapon/module/power_control(src)
+		new /obj/item/weapon/module/power_control(src)
 		new /obj/item/device/multitool(src)
 		new /obj/item/device/multitool(src)
 		new /obj/item/device/multitool(src)
-		new /obj/item/clothing/head/beret/eng
+		return
 
 
 
 /obj/structure/closet/secure_closet/engineering_welding
-	name = "welding supplies locker"
-	req_access = list(access_engine_equip)
+	name = "welding supplies"
+	req_access = list(access_construction)
 	icon_state = "secureengweld1"
 	icon_closed = "secureengweld"
 	icon_locked = "secureengweld1"
@@ -82,6 +85,13 @@
 		new /obj/item/weapon/weldingtool/largetank(src)
 		new /obj/item/weapon/weldingtool/largetank(src)
 		new /obj/item/weapon/weldingtool/largetank(src)
+		new /obj/item/weapon/weldpack(src)
+		new /obj/item/weapon/weldpack(src)
+		new /obj/item/weapon/weldpack(src)
+		new /obj/item/clothing/glasses/welding(src)
+		new /obj/item/clothing/glasses/welding(src)
+		new /obj/item/clothing/glasses/welding(src)
+		return
 
 
 
@@ -102,17 +112,19 @@
 			new /obj/item/weapon/storage/backpack/industrial(src)
 		else
 			new /obj/item/weapon/storage/backpack/satchel_eng(src)
-		new /obj/item/weapon/storage/backpack/duffel/engineering(src)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/dufflebag/eng(src)
+		if (prob(70))
+			new /obj/item/clothing/accessory/storage/brown_vest(src)
+		else
+			new /obj/item/clothing/accessory/storage/webbing(src)
 		new /obj/item/weapon/storage/toolbox/mechanical(src)
 		new /obj/item/device/radio/headset/headset_eng(src)
-		new /obj/item/clothing/under/rank/engineer(src)
-		new /obj/item/clothing/under/rank/engineer/skirt(src)
 		new /obj/item/clothing/suit/storage/hazardvest(src)
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/clothing/glasses/meson(src)
 		new /obj/item/weapon/cartridge/engineering(src)
 		new /obj/item/taperoll/engineering(src)
-		new /obj/item/clothing/head/beret/eng(src)
 
 /obj/structure/closet/secure_closet/atmos_personal
 	name = "technician's locker"
@@ -124,22 +136,23 @@
 	icon_broken = "secureatmbroken"
 	icon_off = "secureatmoff"
 
-
 	New()
 		..()
-		new /obj/item/device/radio/headset/headset_eng(src)
-		new /obj/item/weapon/cartridge/atmos(src)
-		new /obj/item/weapon/storage/toolbox/mechanical(src)
-		new /obj/item/taperoll/engineering(src)
 		if(prob(50))
 			new /obj/item/weapon/storage/backpack/industrial(src)
 		else
 			new /obj/item/weapon/storage/backpack/satchel_eng(src)
-		new /obj/item/weapon/storage/backpack/duffel/engineering(src)
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/dufflebag/eng(src)
+		if (prob(70))
+			new /obj/item/clothing/accessory/storage/brown_vest(src)
+		else
+			new /obj/item/clothing/accessory/storage/webbing(src)
+		new /obj/item/clothing/suit/fire/firefighter(src)
+		new /obj/item/device/flashlight(src)
 		new /obj/item/weapon/extinguisher(src)
+		new /obj/item/device/radio/headset/headset_eng(src)
 		new /obj/item/clothing/suit/storage/hazardvest(src)
 		new /obj/item/clothing/mask/gas(src)
-		new /obj/item/weapon/tank/emergency_oxygen/engi(src)
-		new /obj/item/weapon/watertank/atmos(src)
-		new /obj/item/clothing/suit/fire/atmos(src)
-		new /obj/item/clothing/head/hardhat/atmos(src)
+		new /obj/item/weapon/cartridge/atmos(src)
+		new /obj/item/taperoll/atmos(src)

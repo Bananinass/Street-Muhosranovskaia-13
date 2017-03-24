@@ -9,6 +9,11 @@
 
 	var/on = 1
 
+obj/machinery/embedded_controller/radio/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src,frequency)
+	..()
+
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
 	return 0
 
@@ -24,17 +29,15 @@
 		program.process()
 
 	update_icon()
-	src.updateDialog()
-
-/obj/machinery/embedded_controller/attack_ghost(mob/user as mob)
-	src.ui_interact(user)
 
 /obj/machinery/embedded_controller/attack_ai(mob/user as mob)
 	src.ui_interact(user)
 
 /obj/machinery/embedded_controller/attack_hand(mob/user as mob)
+
 	if(!user.IsAdvancedToolUser())
 		return 0
+
 	src.ui_interact(user)
 
 /obj/machinery/embedded_controller/ui_interact()
@@ -55,7 +58,6 @@
 	unacidable = 1
 
 /obj/machinery/embedded_controller/radio/initialize()
-	..()
 	set_frequency(frequency)
 
 /obj/machinery/embedded_controller/radio/update_icon()

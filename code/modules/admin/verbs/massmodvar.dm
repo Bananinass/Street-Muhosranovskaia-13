@@ -28,13 +28,13 @@
 
 	var/list/locked = list("vars", "key", "ckey", "client")
 
-	for(var/p in forbidden_varedit_object_types)
+	for(var/p in forbidden_varedit_object_types())
 		if( istype(O,p) )
-			to_chat(usr, "<span class='danger'>It is forbidden to edit this object's variables.</span>")
+			to_chat(usr, "<span class='warning'>It is forbidden to edit this object's variables.</span>")
 			return
 
 	var/list/names = list()
-	for(var/V in O.vars)
+	for (var/V in O.vars)
 		names += V
 
 	names = sortList(names)
@@ -72,7 +72,7 @@
 
 	else if(isicon(var_value))
 		to_chat(usr, "Variable appears to be <b>ICON</b>.")
-		var_value = "[bicon(var_value)]"
+		var_value = "\icon[var_value]"
 		default = "icon"
 
 	else if(istype(var_value,/atom) || istype(var_value,/datum))
@@ -123,7 +123,7 @@
 
 	var/original_name
 
-	if(!istype(O, /atom))
+	if (!istype(O, /atom))
 		original_name = "\ref[O] ([O])"
 	else
 		original_name = O:name
@@ -135,78 +135,72 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if( istype(M , O.type) )
+						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
-							M.on_varedit(variable)
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
-							A.on_varedit(variable)
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
-							A.on_varedit(variable)
 
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if(M.type == O.type)
+						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
-							M.on_varedit(variable)
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
-							A.on_varedit(variable)
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
-							A.on_varedit(variable)
 
 		if("edit referenced object")
 			return .(O.vars[variable])
 
 		if("text")
-			var/new_value = input("Enter new text:","Text",O.vars[variable]) as message|null
+			var/new_value = input("Enter new text:","Text",O.vars[variable]) as text|null//todo: sanitize ???
 			if(new_value == null) return
 			O.vars[variable] = new_value
 
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if( istype(M , O.type) )
+						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if(M.type == O.type)
+						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 		if("num")
@@ -222,7 +216,7 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if( istype(M , O.type) )
+						if ( istype(M , O.type) )
 							if(variable=="light_range")
 								M.set_light(new_value)
 							else
@@ -230,7 +224,7 @@
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							if(variable=="light_range")
 								A.set_light(new_value)
 							else
@@ -238,7 +232,7 @@
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							if(variable=="light_range")
 								A.set_light(new_value)
 							else
@@ -247,7 +241,7 @@
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if(M.type == O.type)
+						if (M.type == O.type)
 							if(variable=="light_range")
 								M.set_light(new_value)
 							else
@@ -255,7 +249,7 @@
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							if(variable=="light_range")
 								A.set_light(new_value)
 							else
@@ -263,7 +257,7 @@
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							if(variable=="light_range")
 								A.set_light(new_value)
 							else
@@ -277,32 +271,32 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if( istype(M , O.type) )
+						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if(M.type == O.type)
+						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 		if("file")
@@ -313,32 +307,32 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if( istype(M , O.type) )
+						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O.type, /obj))
 					for(var/obj/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O.type, /turf))
 					for(var/turf/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if(M.type == O.type)
+						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O.type, /obj))
 					for(var/obj/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O.type, /turf))
 					for(var/turf/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 		if("icon")
@@ -348,33 +342,33 @@
 			if(method)
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if( istype(M , O.type) )
+						if ( istype(M , O.type) )
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if( istype(A , O.type) )
+						if ( istype(A , O.type) )
 							A.vars[variable] = O.vars[variable]
 
 			else
 				if(istype(O, /mob))
 					for(var/mob/M in mob_list)
-						if(M.type == O.type)
+						if (M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /obj))
 					for(var/obj/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 				else if(istype(O, /turf))
 					for(var/turf/A in world)
-						if(A.type == O.type)
+						if (A.type == O.type)
 							A.vars[variable] = O.vars[variable]
 
 	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")
