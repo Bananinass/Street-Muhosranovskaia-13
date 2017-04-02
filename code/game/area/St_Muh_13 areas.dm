@@ -1,12 +1,7 @@
-/////////////////////////////////////////////////////////////////////////////////////////////
-/*
-Ã”’Œ—–¿Õ— 
-*/
 
 /area/St_Muh_13
 	name = "Muhosransk"
 	icon_state = "muhosransk"
-	has_gravity = 1
 
 /area/St_Muh_13/outdoor
 	name = "Outdoor"

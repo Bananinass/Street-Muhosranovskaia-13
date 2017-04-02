@@ -6,6 +6,7 @@
 	#include "St_Muh_13.dmm"
 
 	#include "../../code/modules/lobby_music/absconditus.dm"
+	#include "../../code/modules/lobby_music/space_oddity.dm"
 
 	#define USING_MAP_DATUM /datum/map/St_Muh_13
 

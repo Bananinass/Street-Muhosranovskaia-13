@@ -218,3 +218,120 @@
 /turf/simulated/floor/beach/water/New()
 	..()
 	overlays += image("icon"='icons/misc/beach.dmi',"icon_state"="water5","layer"=MOB_LAYER+0.1)
+
+/////////////////////////////////////////////////////////////////////////////
+
+/turf/simulated/floor/St_Muh_13
+	name = "St_Muh_13 turf"
+
+/turf/simulated/floor/St_Muh_13/digable
+
+
+/turf/simulated/floor/St_Muh_13/digable/grass
+	icon = 'icons/St_Muh_13/turfs/zemlya.dmi'
+	icon_state = "grass1"
+
+/turf/simulated/floor/St_Muh_13/digable/grass/New()
+	icon_state = "grass[rand(1, 3)]"
+
+/turf/simulated/floor/St_Muh_13/digable/grass/dump
+	icon = 'icons/St_Muh_13/turfs/zemlya.dmi'
+	icon_state = "dump_grass1"
+
+/turf/simulated/floor/St_Muh_13/digable/grass/dump/New()
+	icon_state = "dump_grass[rand(1, 3)]"
+
+/turf/simulated/floor/St_Muh_13/asphalt
+	name = "road"
+	icon = 'icons/St_Muh_13/turfs/asphalt.dmi'
+	icon_state = "road3"
+	layer = 2.1
+
+/turf/simulated/floor/St_Muh_13/tropa
+	name = "road"
+	icon = 'icons/St_Muh_13/turfs/tropa.dmi'
+	icon_state = "road3"
+	layer = 2.1
+
+/turf/simulated/floor/St_Muh_13/road
+	name = "road"
+	icon = 'icons/St_Muh_13/turfs/building_road.dmi'
+	icon_state = "road2"
+	layer = 2.1
+
+/turf/simulated/floor/St_Muh_13/gryaz
+	name = "dirt"
+	icon = 'icons/St_Muh_13/turfs/zemlya.dmi'
+	icon_state = "gryaz1"
+	layer = 2.2
+
+/turf/simulated/floor/St_Muh_13/gryaz/New()
+	icon_state = "gryaz[rand(1, 3)]"
+
+/turf/simulated/floor/St_Muh_13/gryaz/gryaz2
+	icon_state = "gryaz2"
+
+/turf/simulated/floor/St_Muh_13/gryaz/gryaz3
+	icon_state = "gryaz3"
+
+/turf/simulated/floor/St_Muh_13/plasteel
+	name = "floor"
+	icon = 'icons/St_Muh_13/turfs/floor.dmi'
+
+/turf/simulated/floor/St_Muh_13/plasteel/plita
+	icon_state = "plita1"
+
+/turf/simulated/floor/St_Muh_13/plasteel/plita/New()
+	icon_state = "plita[rand(1, 4)]"
+
+/turf/simulated/floor/St_Muh_13/plasteel/plitochka
+	icon_state = "plitka1"
+
+/turf/simulated/floor/St_Muh_13/plasteel/plitochka/New()
+	icon_state = "plitka[rand(1, 7)]"
+
+/turf/simulated/floor/St_Muh_13/plasteel/plitka
+	icon_state = "plitka_old1"
+
+/turf/simulated/floor/St_Muh_13/plasteel/plitka/New()
+	icon_state = "plitka_old[rand(1, 8)]"
+
+/turf/simulated/floor/St_Muh_13/water
+	name = "water"
+	icon = 'icons/St_Muh_13/turfs/water.dmi'
+	icon_state = "tupo_woda"
+
+/turf/simulated/floor/St_Muh_13/wood
+	icon = 'icons/St_Muh_13/turfs/floor.dmi'
+	name = "floor"
+
+/turf/simulated/floor/St_Muh_13/wood/brown
+	icon_state = "wooden_floor"
+
+/turf/simulated/floor/St_Muh_13/wood/grey
+	icon_state = "wooden_floor2"
+
+/turf/simulated/floor/St_Muh_13/wood/black
+	icon_state = "wooden_floor3"
+
+/turf/simulated/floor/St_Muh_13/wood/oldgor
+	icon_state = "wood1"
+
+/turf/simulated/floor/St_Muh_13/wood/oldvert
+	icon_state = "woodd1"
+
+/turf/simulated/floor/St_Muh_13/agroprom/beton
+	name = "floor"
+	icon = 'icons/St_Muh_13/turfs/pol_agroprom.dmi'
+	icon_state = "beton1"
+
+/turf/simulated/floor/St_Muh_13/agroprom/beton/New()
+	icon_state = "beton[rand(1, 4)]"
+
+/turf/simulated/floor/St_Muh_13/agroprom/gryaz
+	name = "dirt"
+	icon = 'icons/St_Muh_13/turfs/pol_agroprom.dmi'
+	icon_state = "gryaz1"
+
+/turf/simulated/floor/St_Muh_13/agroprom/gryaz/New()
+	icon_state = "gryaz[rand(1, 11)]"
