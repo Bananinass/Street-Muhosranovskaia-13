@@ -56,3 +56,7 @@
 	return
 /turf/simulated/wall/titanium/New(var/newloc)
 	..(newloc,"titanium")
+
+
+/turf/simulated/wall/brick_wall/New(var/newloc)
+	..(newloc,"brick")

@@ -336,6 +336,21 @@ var/list/name_to_material
 	sheet_plural_name = "bricks"
 	conductive = 0
 
+/material/brick
+	name = "brick"
+	stack_type = /obj/item/stack/material/brick
+	icon_base = "stone"
+	icon_reinf = "reinf_stone"
+	icon_colour = "#999999"
+	shard_type = SHARD_STONE_PIECE
+	weight = 24
+	hardness = 80
+	brute_armor = 3
+	door_icon_base = "stone"
+	sheet_singular_name = "Brick"
+	sheet_plural_name = "Bricks"
+	conductive = 0
+
 /material/stone/marble
 	name = "marble"
 	icon_colour = "#AAAAAA"

@@ -90,6 +90,11 @@
 	default_type = "iron"
 	apply_colour = 1
 
+/obj/item/stack/material/brick
+	name = "brick"
+	icon_state = "brick"
+	default_type = "brick"
+
 /obj/item/stack/material/sandstone
 	name = "sandstone brick"
 	icon_state = "sheet-sandstone"
