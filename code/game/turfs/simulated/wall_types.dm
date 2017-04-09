@@ -60,3 +60,6 @@
 
 /turf/simulated/wall/brick_wall/New(var/newloc)
 	..(newloc,"brick")
+
+/turf/simulated/wall/brick_wall_d/New(var/newloc)
+	..(newloc,"brick_d")

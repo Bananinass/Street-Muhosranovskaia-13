@@ -1,33 +1,35 @@
 "a" = (/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
 "b" = (/turf/simulated/wall/brick_wall,/area/St_Muh_13)
-"c" = (/obj/item/device/flashlight/lantern,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"d" = (/turf/simulated/wall,/area/St_Muh_13)
-"e" = (/turf/simulated/wall/silver,/area/St_Muh_13)
-"f" = (/turf/simulated/wall/silvergold,/area/St_Muh_13)
-"g" = (/turf/simulated/wall/voxshuttle,/area/St_Muh_13)
-"h" = (/obj/effect/landmark{name = "JoinLate"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"i" = (/obj/item/device/flashlight/slime,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"j" = (/turf/simulated/wall/wood,/area/St_Muh_13)
-"k" = (/turf/simulated/wall/cult,/area/St_Muh_13)
-"l" = (/obj/item/stack/material/brick,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"m" = (/turf/simulated/wall/diamond,/area/St_Muh_13)
-"n" = (/obj/item/device/flashlight/lamp,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"o" = (/turf/simulated/wall/elevator,/area/St_Muh_13)
-"p" = (/obj/item/device/flashlight,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"q" = (/obj/effect/landmark/start,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"r" = (/obj/item/device/flashlight/lamp/green,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"s" = (/turf/simulated/wall/gold,/area/St_Muh_13)
-"t" = (/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"u" = (/turf/simulated/wall/uranium,/area/St_Muh_13)
-"v" = (/turf/simulated/wall/golddiamond,/area/St_Muh_13)
-"w" = (/turf/simulated/wall/titanium,/area/St_Muh_13)
-"x" = (/turf/simulated/wall/iron,/area/St_Muh_13)
-"y" = (/turf/simulated/wall/phoron,/area/St_Muh_13)
-"z" = (/turf/simulated/wall/ocp_wall,/area/St_Muh_13)
-"A" = (/turf/simulated/wall/ironphoron,/area/St_Muh_13)
-"B" = (/turf/simulated/wall/r_wall,/area/St_Muh_13)
-"C" = (/turf/simulated/wall/sandstone,/area/St_Muh_13)
-"D" = (/turf/simulated/wall/sandstonediamond,/area/St_Muh_13)
+"c" = (/obj/machinery/door/airlock/multi_tile,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"d" = (/obj/item/weapon/card/id,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"e" = (/obj/item/device/flashlight/lantern,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"f" = (/turf/simulated/wall,/area/St_Muh_13)
+"g" = (/turf/simulated/wall/silver,/area/St_Muh_13)
+"h" = (/turf/simulated/wall/silvergold,/area/St_Muh_13)
+"i" = (/turf/simulated/wall/voxshuttle,/area/St_Muh_13)
+"j" = (/obj/effect/landmark{name = "JoinLate"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"k" = (/obj/item/device/flashlight/slime,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"l" = (/turf/simulated/wall/wood,/area/St_Muh_13)
+"m" = (/turf/simulated/wall/cult,/area/St_Muh_13)
+"n" = (/obj/item/stack/material/brick,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"o" = (/turf/simulated/wall/diamond,/area/St_Muh_13)
+"p" = (/obj/item/device/flashlight/lamp,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"q" = (/turf/simulated/wall/elevator,/area/St_Muh_13)
+"r" = (/obj/item/device/flashlight,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"s" = (/obj/effect/landmark/start,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"t" = (/obj/item/device/flashlight/lamp/green,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"u" = (/turf/simulated/wall/gold,/area/St_Muh_13)
+"v" = (/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"w" = (/turf/simulated/wall/uranium,/area/St_Muh_13)
+"x" = (/turf/simulated/wall/golddiamond,/area/St_Muh_13)
+"y" = (/turf/simulated/wall/titanium,/area/St_Muh_13)
+"z" = (/turf/simulated/wall/iron,/area/St_Muh_13)
+"A" = (/turf/simulated/wall/phoron,/area/St_Muh_13)
+"B" = (/turf/simulated/wall/ocp_wall,/area/St_Muh_13)
+"C" = (/turf/simulated/wall/ironphoron,/area/St_Muh_13)
+"D" = (/turf/simulated/wall/r_wall,/area/St_Muh_13)
+"E" = (/turf/simulated/wall/sandstone,/area/St_Muh_13)
+"F" = (/turf/simulated/wall/sandstonediamond,/area/St_Muh_13)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -52,11 +54,12 @@ abaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaa
 abaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaa
 abaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaa
 abaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaa
-abaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaa
+abaaaaaaaaaaaaaaaaaaaacaaaaaaaaaaaabaaaaaaaaaaaaaa
+abaaaaaaaaaaaaaaaaaaabacbaaaaaaaaaabaaaaaaaaaaaaaa
 abaaaaaaaaaaaaaaaaaaabaabaaaaaaaaaabaaaaaaaaaaaaaa
 abaaaaaaaaaaaaaaaaaaabaabaaaaaaaaaabaaaaaaaaaaaaaa
-abaaaaaaaaaaaaaaaaaaabaabaaaaaaaaaabaaaaaaaaaaaaaa
-abbbbbbbbbbbbbbbbbbbbbaabbbbbbbbbbbbaaaaaaaaaaaaaa
+abbbbbbbbbbbbbbbbbbbbbccbbbbbbbbbbbbaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaadaadaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -68,15 +71,14 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaacaadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaefgahijaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaakaaaccaaalaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaamaanachcalabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaoapqrabaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaasaactauaaabbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaavaaaaawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaxyzABCDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaeaafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaghiajklaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaamaaaeeaaanaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaoaapaejeanabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaqarstabaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaauaaevawaaabbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaxaaaaayaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaazABCDEFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

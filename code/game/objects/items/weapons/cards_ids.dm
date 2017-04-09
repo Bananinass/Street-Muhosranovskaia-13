@@ -91,7 +91,7 @@ var/const/NO_EMAG_ACT = -50
 	return 1
 
 /obj/item/weapon/card/id
-	name = "identification card"
+	name = "key"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"

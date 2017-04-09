@@ -35,13 +35,13 @@
 	var/secured_wires = 0
 	var/datum/wires/airlock/wires = null
 
-	var/open_sound_powered = 'sound/machines/airlock.ogg'
+	var/open_sound_powered = 'sound/machines/door_open.ogg'
 	var/open_sound_unpowered = 'sound/machines/airlock_creaking.ogg'
-	var/open_failure_access_denied = 'sound/machines/buzz-two.ogg'
+	var/open_failure_access_denied = 'sound/machines/door_locked.ogg'
 
-	var/close_sound_powered = 'sound/machines/AirlockClose.ogg'
+	var/close_sound_powered = 'sound/machines/door_close.ogg'
 	var/close_sound_unpowered = 'sound/machines/airlock_creaking.ogg'
-	var/close_failure_blocked = 'sound/machines/triple_beep.ogg'
+	var/close_failure_blocked = 'sound/machines/door_locked.ogg'
 
 	var/bolts_dropping = 'sound/machines/BoltsDown.ogg'
 	var/bolts_rising = 'sound/machines/BoltsUp.ogg'
