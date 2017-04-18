@@ -1,0 +1,113 @@
+"aa" = (/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"ab" = (/turf/simulated/wall/brick_wall,/area/St_Muh_13)
+"ac" = (/obj/machinery/door/airlock/multi_tile,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"ad" = (/obj/machinery/door/unpowered/simple/silver,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"ae" = (/obj/machinery/door/unpowered/simple/wood,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"af" = (/obj/machinery/door/airlock/maintenance,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"ag" = (/obj/machinery/door/airlock/alarmlock,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"ah" = (/obj/machinery/door/airlock{tag = "icon-door_closed"; icon_state = "door_closed"; dir = 2},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"ai" = (/obj/machinery/door/airlock{tag = "icon-door_closing (EAST)"; icon_state = "door_closing"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aj" = (/obj/machinery/door/airlock/glass,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"ak" = (/obj/item/weapon/card/id,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"al" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road_s3"; icon_state = "road_s3"},/area/St_Muh_13)
+"am" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road_s33"; icon_state = "road_s33"},/area/St_Muh_13)
+"an" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road171"; icon_state = "road171"},/area/St_Muh_13)
+"ao" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road734"; icon_state = "road734"},/area/St_Muh_13)
+"ap" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road133"; icon_state = "road133"},/area/St_Muh_13)
+"aq" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road211"; icon_state = "road211"},/area/St_Muh_13)
+"ar" = (/turf/simulated/floor/St_Muh_13/tropa,/area/St_Muh_13)
+"as" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road923"; icon_state = "road923"},/area/St_Muh_13)
+"at" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road14"; icon_state = "road14"},/area/St_Muh_13)
+"au" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road_s333"; icon_state = "road_s333"},/area/St_Muh_13)
+"av" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road756"; icon_state = "road756"},/area/St_Muh_13)
+"aw" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road9649"; icon_state = "road9649"},/area/St_Muh_13)
+"ax" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road9223"; icon_state = "road9223"},/area/St_Muh_13)
+"ay" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road789"; icon_state = "road789"},/area/St_Muh_13)
+"az" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road13"; icon_state = "road13"},/area/St_Muh_13)
+"aA" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-POVOROT222"; icon_state = "POVOROT222"},/area/St_Muh_13)
+"aB" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-POVOROT2222"; icon_state = "POVOROT2222"},/area/St_Muh_13)
+"aC" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road16"; icon_state = "road16"},/area/St_Muh_13)
+"aD" = (/turf/simulated/floor/St_Muh_13/digable/grass,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road20"; icon_state = "road20"},/area/St_Muh_13)
+"aE" = (/turf/simulated/floor/St_Muh_13/digable/grass,/obj/item/device/flashlight/lantern,/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-road_s33"; icon_state = "road_s33"},/area/St_Muh_13)
+"aF" = (/turf/simulated/wall,/area/St_Muh_13)
+"aG" = (/turf/simulated/wall/silver,/area/St_Muh_13)
+"aH" = (/turf/simulated/wall/silvergold,/area/St_Muh_13)
+"aI" = (/turf/simulated/wall/voxshuttle,/area/St_Muh_13)
+"aJ" = (/turf/simulated/floor/St_Muh_13/digable/grass,/obj/effect/landmark{name = "JoinLate"},/turf/simulated/floor/St_Muh_13/tropa{tag = "icon-POVOROT2222"; icon_state = "POVOROT2222"},/area/St_Muh_13)
+"aK" = (/obj/item/device/flashlight/slime,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aL" = (/turf/simulated/wall/wood,/area/St_Muh_13)
+"aM" = (/turf/simulated/wall/cult,/area/St_Muh_13)
+"aN" = (/obj/item/device/flashlight/lantern,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aO" = (/obj/item/stack/material/brick,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aP" = (/turf/simulated/wall/diamond,/area/St_Muh_13)
+"aQ" = (/obj/item/device/flashlight/lamp,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aR" = (/obj/effect/landmark{name = "JoinLate"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aS" = (/turf/simulated/wall/elevator,/area/St_Muh_13)
+"aT" = (/obj/item/device/flashlight,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aU" = (/obj/effect/landmark/start,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aV" = (/obj/item/device/flashlight/lamp/green,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aW" = (/turf/simulated/wall/gold,/area/St_Muh_13)
+"aX" = (/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aY" = (/turf/simulated/wall/uranium,/area/St_Muh_13)
+"aZ" = (/turf/simulated/wall/golddiamond,/area/St_Muh_13)
+"ba" = (/turf/simulated/wall/titanium,/area/St_Muh_13)
+"bb" = (/turf/simulated/wall/iron,/area/St_Muh_13)
+"bc" = (/turf/simulated/wall/phoron,/area/St_Muh_13)
+"bd" = (/turf/simulated/wall/ocp_wall,/area/St_Muh_13)
+"be" = (/turf/simulated/wall/ironphoron,/area/St_Muh_13)
+"bf" = (/turf/simulated/wall/r_wall,/area/St_Muh_13)
+"bg" = (/turf/simulated/wall/sandstone,/area/St_Muh_13)
+"bh" = (/turf/simulated/wall/sandstonediamond,/area/St_Muh_13)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabababababababababababababababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaacabaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaabaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaabaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaababababababababababababadabaeabafagabababacacababababahabaiabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajaaakalamakaaacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanaoapamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanaqarararamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasaoarararararamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaanaoararatauarararamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaasaoararatavawaaaxayazamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaasaoararatavawaaaaaaaaaaaAaBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaanaqaparatavawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaCapazatavawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaDatavawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaalamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaalamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaalaEaaaaaFaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaGaHaIaAaJaKaLaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaMaaaaaaaNaNaaaaaaaOaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaPaaaaaQaaaNaRaNaaaOaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaSaaaTaUaVaaabaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaWaaaaaNaXaaaYaaaaaaabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaZaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabbbcbdbebfbgbhaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

@@ -241,37 +241,41 @@
 /turf/simulated/floor/St_Muh_13/digable/grass/dump/New()
 	icon_state = "dump_grass[rand(1, 3)]"
 
-/turf/simulated/floor/St_Muh_13/asphalt
-	name = "road"
-	icon = 'icons/St_Muh_13/turfs/asphalt.dmi'
-	icon_state = "road3"
-	layer = 2.1
+/obj/structure/St_Muh_13/soil
+	name = "Soil"
+	icon = 'icons/St_Muh_13/turfs/zemlya.dmi'
+	icon_state = "gr13"
+	anchored = 1
+	density = 0
+	opacity = 0
 
-/turf/simulated/floor/St_Muh_13/tropa
+/obj/structure/St_Muh_13/soil/asphalt
+	name = "road"
+	icon = 'icons/turf/asphalt.dmi'
+	icon_state = "road3"
+
+/obj/structure/St_Muh_13/soil/tropa
 	name = "road"
 	icon = 'icons/St_Muh_13/turfs/tropa.dmi'
 	icon_state = "road3"
-	layer = 2.1
 
-/turf/simulated/floor/St_Muh_13/road
+/obj/structure/St_Muh_13/soil/building_road
 	name = "road"
 	icon = 'icons/St_Muh_13/turfs/building_road.dmi'
 	icon_state = "road2"
-	layer = 2.1
 
-/turf/simulated/floor/St_Muh_13/gryaz
+/obj/structure/St_Muh_13/soil/gryaz
 	name = "dirt"
 	icon = 'icons/St_Muh_13/turfs/zemlya.dmi'
 	icon_state = "gryaz1"
-	layer = 2.2
 
-/turf/simulated/floor/St_Muh_13/gryaz/New()
+/obj/structure/St_Muh_13/soil/gryaz/New()
 	icon_state = "gryaz[rand(1, 3)]"
 
-/turf/simulated/floor/St_Muh_13/gryaz/gryaz2
+/obj/structure/St_Muh_13/soil/gryaz/gryaz2
 	icon_state = "gryaz2"
 
-/turf/simulated/floor/St_Muh_13/gryaz/gryaz3
+/obj/structure/St_Muh_13/soil/gryaz/gryaz3
 	icon_state = "gryaz3"
 
 /turf/simulated/floor/St_Muh_13/plasteel
