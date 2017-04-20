@@ -2277,6 +2277,7 @@
 #include "maps\overmap_example\overmap_example_define.dm"
 #include "maps\St_Muh_13\St_Muh_13.dm"
 #include "maps\St_Muh_13\St_Muh_13_define.dm"
+#include "maps\St_Muh_13\Sewerage.dmm"
 #include "maps\St_Muh_13\St_Muh_13.dmm"
 #include "maps\~mapsystem\map_preferences.dm"
 #include "maps\~mapsystem\maps.dm"

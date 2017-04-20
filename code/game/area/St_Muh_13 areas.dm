@@ -6,13 +6,9 @@
 /area/St_Muh_13/outdoor
 	name = "Outdoor"
 	icon_state = "m_outdoor"
-	requires_power = 1
-	always_unpowered = 1
-	lighting_use_dynamic = 1
-	power_light = 0
-	power_equip = 0
-	power_environ = 0
 	luminosity = 1
+	requires_power = 0
+	lighting_use_dynamic = 0
 
 //менопедекеммше гнмш
 

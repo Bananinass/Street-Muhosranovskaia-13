@@ -1,56 +1,68 @@
 "aa" = (/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"ab" = (/turf/simulated/wall/brick_wall,/area/St_Muh_13)
-"ac" = (/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"ad" = (/obj/machinery/door/unpowered/simple_door,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"ae" = (/obj/machinery/door/unpowered/simple/silver{locked = 0},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"af" = (/obj/machinery/door/unpowered/simple_door,/turf/simulated/wall/brick_wall,/area/St_Muh_13)
-"ag" = (/obj/item/weapon/card/id,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"ah" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3"; icon_state = "road_s3"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"ai" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s33"; icon_state = "road_s33"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"aj" = (/obj/machinery/door/unpowered/simple_door,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"ak" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-POVOROT2"; icon_state = "POVOROT2"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"al" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3333"; icon_state = "road_s3333"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"am" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-POVOROT22"; icon_state = "POVOROT22"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"an" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road14"; icon_state = "road14"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"ao" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s333"; icon_state = "road_s333"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"ap" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road13"; icon_state = "road13"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"aq" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road144"; icon_state = "road144"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"ar" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road133"; icon_state = "road133"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"as" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-POVOROT2222"; icon_state = "POVOROT2222"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"at" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s33"; icon_state = "road_s33"},/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"au" = (/turf/simulated/wall,/area/St_Muh_13/outdoor)
-"av" = (/turf/simulated/wall/silver,/area/St_Muh_13)
-"aw" = (/turf/simulated/wall/silvergold,/area/St_Muh_13)
-"ax" = (/turf/simulated/wall/voxshuttle,/area/St_Muh_13)
-"ay" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3"; icon_state = "road_s3"},/obj/effect/landmark{name = "JoinLate"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"az" = (/obj/item/device/flashlight/slime,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"aA" = (/turf/simulated/wall/wood,/area/St_Muh_13/outdoor)
-"aB" = (/turf/simulated/wall/brick_wall,/area/St_Muh_13/outdoor)
-"aC" = (/turf/simulated/wall/cult,/area/St_Muh_13)
-"aD" = (/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"aE" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3"; icon_state = "road_s3"},/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"aF" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road144"; icon_state = "road144"},/obj/item/device/flashlight/lantern,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"aG" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3333"; icon_state = "road_s3333"},/obj/effect/landmark{name = "JoinLate"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"aH" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3333"; icon_state = "road_s3333"},/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"aI" = (/turf/simulated/wall/diamond,/area/St_Muh_13)
-"aJ" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-POVOROT222"; icon_state = "POVOROT222"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"aK" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s333"; icon_state = "road_s333"},/obj/item/device/flashlight/lantern,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
-"aL" = (/turf/simulated/wall/elevator,/area/St_Muh_13)
-"aM" = (/obj/item/device/flashlight,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"aN" = (/obj/effect/landmark/start,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"aO" = (/obj/item/device/flashlight/lamp/green,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"aP" = (/turf/simulated/wall/gold,/area/St_Muh_13)
-"aQ" = (/obj/item/device/flashlight/lantern,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
-"aR" = (/turf/simulated/wall/uranium,/area/St_Muh_13)
-"aS" = (/turf/simulated/wall/golddiamond,/area/St_Muh_13)
-"aT" = (/turf/simulated/wall/titanium,/area/St_Muh_13)
-"aU" = (/turf/simulated/wall/iron,/area/St_Muh_13)
-"aV" = (/turf/simulated/wall/phoron,/area/St_Muh_13)
-"aW" = (/turf/simulated/wall/ocp_wall,/area/St_Muh_13)
-"aX" = (/turf/simulated/wall/ironphoron,/area/St_Muh_13)
-"aY" = (/turf/simulated/wall/r_wall,/area/St_Muh_13)
-"aZ" = (/turf/simulated/wall/sandstone,/area/St_Muh_13)
-"ba" = (/turf/simulated/wall/sandstonediamond,/area/St_Muh_13)
+"ab" = (/turf/simulated/floor/St_Muh_13/agroprom/gryaz,/area/St_Muh_13/outdoor)
+"ac" = (/turf/simulated/floor/St_Muh_13/plasteel/plita,/area/St_Muh_13/outdoor)
+"ad" = (/obj/structure/ladder/manhole/down,/turf/simulated/floor/St_Muh_13/plasteel/plita,/area/St_Muh_13/outdoor)
+"ae" = (/turf/simulated/floor/St_Muh_13/agroprom/beton,/area/St_Muh_13/outdoor)
+"af" = (/turf/simulated/wall/brick_wall,/area/St_Muh_13/sleeping_area)
+"ag" = (/turf/simulated/floor/St_Muh_13/plasteel/plitochka,/area/St_Muh_13/sleeping_area)
+"ah" = (/obj/machinery/door/unpowered/simple_door,/turf/simulated/floor/St_Muh_13/plasteel/plitochka,/area/St_Muh_13/sleeping_area)
+"ai" = (/obj/machinery/door/unpowered/simple/silver{locked = 0},/turf/simulated/floor/St_Muh_13/plasteel/plitochka,/area/St_Muh_13/sleeping_area)
+"aj" = (/obj/item/weapon/card/id,/turf/simulated/floor/St_Muh_13/agroprom/beton,/area/St_Muh_13/outdoor)
+"ak" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3"; icon_state = "road_s3"},/turf/simulated/floor/St_Muh_13/agroprom/beton,/area/St_Muh_13/outdoor)
+"al" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s33"; icon_state = "road_s33"},/turf/simulated/floor/St_Muh_13/agroprom/beton,/area/St_Muh_13/outdoor)
+"am" = (/obj/machinery/door/unpowered/simple_door,/turf/simulated/floor/St_Muh_13/agroprom/beton,/area/St_Muh_13/outdoor)
+"an" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3"; icon_state = "road_s3"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"ao" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s33"; icon_state = "road_s33"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"ap" = (/obj/machinery/door/unpowered/simple_door,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"aq" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-POVOROT2"; icon_state = "POVOROT2"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"ar" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3333"; icon_state = "road_s3333"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"as" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-POVOROT22"; icon_state = "POVOROT22"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"at" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road14"; icon_state = "road14"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"au" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s333"; icon_state = "road_s333"},/turf/simulated/floor/St_Muh_13/agroprom/gryaz,/area/St_Muh_13/outdoor)
+"av" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road13"; icon_state = "road13"},/turf/simulated/floor/St_Muh_13/agroprom/gryaz,/area/St_Muh_13/outdoor)
+"aw" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road144"; icon_state = "road144"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"ax" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road133"; icon_state = "road133"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"ay" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s33"; icon_state = "road_s33"},/turf/simulated/floor/St_Muh_13/agroprom/gryaz,/area/St_Muh_13/outdoor)
+"az" = (/obj/structure/ladder/manhole,/turf/simulated/floor/St_Muh_13/plasteel/plita,/area/St_Muh_13/outdoor)
+"aA" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3"; icon_state = "road_s3"},/turf/simulated/floor/St_Muh_13/agroprom/gryaz,/area/St_Muh_13/outdoor)
+"aB" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s333"; icon_state = "road_s333"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"aC" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-POVOROT2222"; icon_state = "POVOROT2222"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"aD" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s33"; icon_state = "road_s33"},/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"aE" = (/turf/simulated/wall,/area/St_Muh_13/outdoor)
+"aF" = (/turf/simulated/wall/silver,/area/St_Muh_13)
+"aG" = (/turf/simulated/wall/silvergold,/area/St_Muh_13)
+"aH" = (/turf/simulated/wall/voxshuttle,/area/St_Muh_13)
+"aI" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3"; icon_state = "road_s3"},/obj/effect/landmark{name = "JoinLate"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"aJ" = (/obj/item/device/flashlight/slime,/turf/simulated/floor/St_Muh_13/agroprom/gryaz,/area/St_Muh_13/outdoor)
+"aK" = (/turf/simulated/wall/wood,/area/St_Muh_13/outdoor)
+"aL" = (/turf/simulated/wall/brick_wall,/area/St_Muh_13/outdoor)
+"aM" = (/turf/simulated/wall/cult,/area/St_Muh_13)
+"aN" = (/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aO" = (/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aP" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3"; icon_state = "road_s3"},/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"aQ" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road144"; icon_state = "road144"},/obj/item/device/flashlight/lantern,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"aR" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3333"; icon_state = "road_s3333"},/obj/effect/landmark{name = "JoinLate"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"aS" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s3333"; icon_state = "road_s3333"},/obj/item/device/flashlight/flare,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"aT" = (/turf/simulated/wall/diamond,/area/St_Muh_13)
+"aU" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-POVOROT222"; icon_state = "POVOROT222"},/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aV" = (/obj/structure/St_Muh_13/soil/tropa{tag = "icon-road_s333"; icon_state = "road_s333"},/obj/item/device/flashlight/lantern,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13/outdoor)
+"aW" = (/turf/simulated/wall/elevator,/area/St_Muh_13)
+"aX" = (/obj/item/device/flashlight,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aY" = (/obj/effect/landmark/start,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"aZ" = (/obj/item/device/flashlight/lamp/green,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"ba" = (/turf/simulated/wall/brick_wall,/area/St_Muh_13)
+"bb" = (/turf/simulated/wall/gold,/area/St_Muh_13)
+"bc" = (/obj/item/device/flashlight/lantern,/turf/simulated/floor/St_Muh_13/digable/grass,/area/St_Muh_13)
+"bd" = (/turf/simulated/wall/uranium,/area/St_Muh_13)
+"be" = (/turf/simulated/wall/golddiamond,/area/St_Muh_13)
+"bf" = (/turf/simulated/wall/titanium,/area/St_Muh_13)
+"bg" = (/turf/simulated/wall/iron,/area/St_Muh_13)
+"bh" = (/turf/simulated/wall/phoron,/area/St_Muh_13)
+"bi" = (/turf/simulated/wall/ocp_wall,/area/St_Muh_13)
+"bj" = (/turf/simulated/wall/ironphoron,/area/St_Muh_13)
+"bk" = (/turf/simulated/wall/r_wall,/area/St_Muh_13)
+"bl" = (/turf/simulated/wall/sandstone,/area/St_Muh_13)
+"bm" = (/turf/simulated/wall/sandstonediamond,/area/St_Muh_13)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -62,44 +74,44 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabababababababababababababababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacabadadabacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacabacacabacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaabacacacacacacacacacacacacacacacacacacacabacacabacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaababababababababababababaeababababafabababadadababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagahaiagaaajaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaajaaaaahaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaakalalalalalamaaaaaaaaaaaaaaaaahaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaahanaoaoaoapaqalalalalalalalalaraiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaahaiaaaaaaahanaoaoaoaoaoaoaoaoaoasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaahaiaaaaaaahaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaahaiaaaaaaahaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaahataaaaauahaiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaavawaxayaiazaAaaahaiaaaBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaCacaDaEaFalaGaHaraiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaIacacaJaoaoaKaoaoasaaaBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaLacaMaNaOacabaaaaaaaaaBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaPacacaQaDacaRaaaaaaaBaBaBaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaSacacacacacaTaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaUaVaWaXaYaZbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacadacabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeacacacaeaeaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagafahahafagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagafagagafagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafagagagagagagagagagagagagagagagagagagagafagagafagagagagagagagagagagafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeafafafafafafafafafafafafaiafafafafahafafafahahafafafafafafafafafafafafaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeajakalajaeamaeaeaeaeaeaeaeaeaeaeaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapaaaaanaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaanaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaqarararararasaaaaaaaaaaaaaaaaanaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaanatauauauavawararararararararaxaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaanayazacadaAataBaBaBaBaBaBaBaBaBaCaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaanayacacacaAaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaanayabababaAaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaanaDababaEanaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaFaGaHaIaoaJaKabanaoaaaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaMaNaOaPaQaraRaSaxaoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaTaNaNaUaBaBaVaBaBaCaaaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaWaNaXaYaZaNbaaaaaaaaaaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabbaNaNbcaOaNbdaaaaaaaLaLaLaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabeaNaNaNaNaNbfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabgbhbibjbkblbmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

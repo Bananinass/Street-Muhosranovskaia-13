@@ -122,6 +122,22 @@
 	allowed_directions = UP|DOWN
 	icon_state = "ladder11"
 
+/obj/structure/ladder/manhole
+	name = "manhole"
+	icon_state = "manhole1"
+
+/obj/structure/ladder/manhole/update_icon()
+	icon_state = "manhole[!!(allowed_directions & UP)][!!(allowed_directions & DOWN)]"
+
+/obj/structure/ladder/manhole/down
+	desc = "A manhole. You can climb down."
+	allowed_directions = DOWN
+	icon_state = "manholedown"
+
+/obj/structure/ladder/manhole/up
+	allowed_directions = UP
+	icon_state = "manholeup"
+
 /obj/structure/stairs
 	name = "Stairs"
 	desc = "Stairs leading to another deck.  Not too useful if the gravity goes out."

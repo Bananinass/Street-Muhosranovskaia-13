@@ -1,7 +1,7 @@
 /obj/machinery/door/unpowered/simple_door
 	name = "Door"
 	icon = 'icons/obj/doors/St_Muh_13/door.dmi'
-	icon_state = "door_closed"
+	icon_state = "door_close"
 
 	var/material/material
 	hitsound = 'sound/weapons/genhit.ogg'
